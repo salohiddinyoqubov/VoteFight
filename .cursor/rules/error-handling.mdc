@@ -1,0 +1,55 @@
+---
+description: Error Handling Patterns for VoteFight
+globs: ["**/*.js", "**/*.jsx", "**/*.ts", "**/*.tsx", "**/*.py"]
+alwaysApply: true
+---
+
+# VoteFight Error Handling Patterns
+
+## Frontend Error Handling
+- Use try-catch blocks for async operations
+- Implement error boundaries for React components
+- Provide user-friendly error messages
+- Log errors for debugging
+- Implement fallback UI for errors
+- Handle network errors gracefully
+
+## Backend Error Handling
+- Use proper exception handling
+- Implement custom exception classes
+- Log errors with proper context
+- Return appropriate HTTP status codes
+- Implement proper error responses
+- Use validation for input data
+
+## API Error Responses
+- Use consistent error response format
+- Include proper error codes
+- Provide helpful error messages
+- Include request IDs for tracking
+- Implement proper error logging
+- Use appropriate HTTP status codes
+
+## Database Error Handling
+- Handle connection errors
+- Implement proper transaction handling
+- Use database connection pooling
+- Handle constraint violations
+- Implement proper rollbacks
+- Use proper error logging
+
+## User Experience
+- Show loading states during operations
+- Provide clear error messages
+- Implement retry mechanisms
+- Use proper error boundaries
+- Handle offline scenarios
+- Implement proper fallbacks
+
+## Monitoring and Logging
+- Log all errors with context
+- Use structured logging
+- Implement error tracking
+- Monitor error rates
+- Set up alerts for critical errors
+- Use proper log levels

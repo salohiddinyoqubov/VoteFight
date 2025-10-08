@@ -1,0 +1,466 @@
+---
+description: AI-Powered Development Techniques for VoteFight
+globs: ["**/*.js", "**/*.jsx", "**/*.ts", "**/*.tsx", "**/*.py"]
+alwaysApply: true
+---
+
+# AI-Powered Development for VoteFight
+
+## Intelligent Code Generation
+
+### 1. Context-Aware Code Generation
+```javascript
+// AI generates code based on VoteFight patterns
+const aiCodeGeneration = {
+  // Generate components based on requirements
+  generateComponent: async (requirements) => {
+    const component = await ai.generateComponent({
+      framework: 'React',
+      patterns: 'VoteFight',
+      requirements: requirements,
+      style: 'Tailwind CSS'
+    });
+    
+    return component;
+  },
+  
+  // Generate API endpoints
+  generateAPIEndpoint: async (endpointSpec) => {
+    const endpoint = await ai.generateAPI({
+      framework: 'Django REST Framework',
+      patterns: 'VoteFight API',
+      specification: endpointSpec
+    });
+    
+    return endpoint;
+  },
+  
+  // Generate tests
+  generateTests: async (code) => {
+    const tests = await ai.generateTests({
+      code: code,
+      framework: 'Jest + React Testing Library',
+      patterns: 'VoteFight testing'
+    });
+    
+    return tests;
+  }
+};
+```
+
+### 2. Smart Code Completion
+```javascript
+// Intelligent code completion
+const smartCompletion = {
+  // Complete functions based on context
+  completeFunction: async (partialCode, context) => {
+    const completion = await ai.completeCode({
+      partial: partialCode,
+      context: context,
+      patterns: 'VoteFight'
+    });
+    
+    return completion;
+  },
+  
+  // Suggest imports
+  suggestImports: async (code) => {
+    const imports = await ai.suggestImports({
+      code: code,
+      framework: 'React + Next.js'
+    });
+    
+    return imports;
+  },
+  
+  // Suggest optimizations
+  suggestOptimizations: async (code) => {
+    const optimizations = await ai.suggestOptimizations({
+      code: code,
+      performance: true,
+      accessibility: true
+    });
+    
+    return optimizations;
+  }
+};
+```
+
+## Automated Documentation
+
+### 1. Auto-Generate Documentation
+```javascript
+// Automated documentation generation
+const autoDocumentation = {
+  // Generate API documentation
+  generateAPIDocs: async (endpoints) => {
+    const docs = await ai.generateAPIDocumentation({
+      endpoints: endpoints,
+      format: 'OpenAPI',
+      style: 'VoteFight API'
+    });
+    
+    return docs;
+  },
+  
+  // Generate component documentation
+  generateComponentDocs: async (components) => {
+    const docs = await ai.generateComponentDocs({
+      components: components,
+      format: 'Storybook',
+      style: 'VoteFight UI'
+    });
+    
+    return docs;
+  },
+  
+  // Generate README updates
+  updateREADME: async (changes) => {
+    const readme = await ai.updateREADME({
+      changes: changes,
+      style: 'VoteFight project'
+    });
+    
+    return readme;
+  }
+};
+```
+
+### 2. Intelligent Code Comments
+```javascript
+// Auto-generate meaningful comments
+const intelligentComments = {
+  // Generate function comments
+  generateFunctionComments: async (functions) => {
+    const comments = await ai.generateComments({
+      functions: functions,
+      style: 'JSDoc',
+      language: 'English'
+    });
+    
+    return comments;
+  },
+  
+  // Generate inline comments
+  generateInlineComments: async (code) => {
+    const comments = await ai.generateInlineComments({
+      code: code,
+      complexity: 'high',
+      style: 'explanatory'
+    });
+    
+    return comments;
+  }
+};
+```
+
+## Advanced Testing Automation
+
+### 1. AI-Generated Test Cases
+```javascript
+// AI generates comprehensive test cases
+const aiTestGeneration = {
+  // Generate unit tests
+  generateUnitTests: async (functions) => {
+    const tests = await ai.generateUnitTests({
+      functions: functions,
+      framework: 'Jest',
+      coverage: 'comprehensive'
+    });
+    
+    return tests;
+  },
+  
+  // Generate integration tests
+  generateIntegrationTests: async (components) => {
+    const tests = await ai.generateIntegrationTests({
+      components: components,
+      framework: 'React Testing Library',
+      scenarios: 'user workflows'
+    });
+    
+    return tests;
+  },
+  
+  // Generate E2E tests
+  generateE2ETests: async (userFlows) => {
+    const tests = await ai.generateE2ETests({
+      flows: userFlows,
+      framework: 'Playwright',
+      scenarios: 'VoteFight user journeys'
+    });
+    
+    return tests;
+  }
+};
+```
+
+### 2. Intelligent Test Data Generation
+```javascript
+// Generate realistic test data
+const testDataGeneration = {
+  // Generate user data
+  generateUserData: async (count) => {
+    const users = await ai.generateTestData({
+      type: 'users',
+      count: count,
+      realistic: true,
+      locale: 'Uzbek, Russian, English'
+    });
+    
+    return users;
+  },
+  
+  // Generate battle data
+  generateBattleData: async (count) => {
+    const battles = await ai.generateTestData({
+      type: 'battles',
+      count: count,
+      realistic: true,
+      categories: 'technology, sports, entertainment'
+    });
+    
+    return battles;
+  }
+};
+```
+
+## Performance Optimization AI
+
+### 1. Intelligent Performance Analysis
+```javascript
+// AI-powered performance optimization
+const performanceAI = {
+  // Analyze performance bottlenecks
+  analyzePerformance: async (codebase) => {
+    const analysis = await ai.analyzePerformance({
+      codebase: codebase,
+      metrics: 'Core Web Vitals',
+      framework: 'Next.js + Django'
+    });
+    
+    return {
+      bottlenecks: analysis.bottlenecks,
+      suggestions: analysis.suggestions,
+      optimizations: analysis.optimizations
+    };
+  },
+  
+  // Suggest performance improvements
+  suggestImprovements: async (performanceData) => {
+    const improvements = await ai.suggestPerformanceImprovements({
+      data: performanceData,
+      framework: 'React + Django',
+      priorities: 'VoteFight specific'
+    });
+    
+    return improvements;
+  }
+};
+```
+
+### 2. Automated Bundle Optimization
+```javascript
+// AI-powered bundle optimization
+const bundleOptimization = {
+  // Analyze bundle size
+  analyzeBundle: async (build) => {
+    const analysis = await ai.analyzeBundle({
+      build: build,
+      framework: 'Next.js',
+      optimization: 'VoteFight specific'
+    });
+    
+    return {
+      size: analysis.size,
+      chunks: analysis.chunks,
+      suggestions: analysis.suggestions
+    };
+  },
+  
+  // Optimize imports
+  optimizeImports: async (files) => {
+    const optimized = await ai.optimizeImports({
+      files: files,
+      framework: 'React',
+      strategy: 'tree-shaking'
+    });
+    
+    return optimized;
+  }
+};
+```
+
+## Security AI
+
+### 1. Automated Security Analysis
+```javascript
+// AI-powered security analysis
+const securityAI = {
+  // Analyze security vulnerabilities
+  analyzeSecurity: async (codebase) => {
+    const analysis = await ai.analyzeSecurity({
+      codebase: codebase,
+      framework: 'Next.js + Django',
+      focus: 'VoteFight security'
+    });
+    
+    return {
+      vulnerabilities: analysis.vulnerabilities,
+      risks: analysis.risks,
+      suggestions: analysis.suggestions
+    };
+  },
+  
+  // Suggest security improvements
+  suggestSecurityImprovements: async (securityData) => {
+    const improvements = await ai.suggestSecurityImprovements({
+      data: securityData,
+      framework: 'VoteFight',
+      priorities: 'vote fraud prevention'
+    });
+    
+    return improvements;
+  }
+};
+```
+
+### 2. Automated Security Testing
+```javascript
+// AI-generated security tests
+const securityTesting = {
+  // Generate security test cases
+  generateSecurityTests: async (endpoints) => {
+    const tests = await ai.generateSecurityTests({
+      endpoints: endpoints,
+      framework: 'Django REST Framework',
+      focus: 'vote fraud prevention'
+    });
+    
+    return tests;
+  },
+  
+  // Generate penetration tests
+  generatePenetrationTests: async (application) => {
+    const tests = await ai.generatePenetrationTests({
+      application: application,
+      focus: 'VoteFight vulnerabilities'
+    });
+    
+    return tests;
+  }
+};
+```
+
+## Accessibility AI
+
+### 1. Automated Accessibility Analysis
+```javascript
+// AI-powered accessibility analysis
+const accessibilityAI = {
+  // Analyze accessibility issues
+  analyzeAccessibility: async (components) => {
+    const analysis = await ai.analyzeAccessibility({
+      components: components,
+      standards: 'WCAG 2.1',
+      framework: 'React'
+    });
+    
+    return {
+      issues: analysis.issues,
+      suggestions: analysis.suggestions,
+      compliance: analysis.compliance
+    };
+  },
+  
+  // Suggest accessibility improvements
+  suggestAccessibilityImprovements: async (analysis) => {
+    const improvements = await ai.suggestAccessibilityImprovements({
+      analysis: analysis,
+      framework: 'React + Tailwind',
+      standards: 'WCAG 2.1'
+    });
+    
+    return improvements;
+  }
+};
+```
+
+### 2. Automated Accessibility Testing
+```javascript
+// AI-generated accessibility tests
+const accessibilityTesting = {
+  // Generate accessibility test cases
+  generateAccessibilityTests: async (components) => {
+    const tests = await ai.generateAccessibilityTests({
+      components: components,
+      framework: 'Jest + React Testing Library',
+      standards: 'WCAG 2.1'
+    });
+    
+    return tests;
+  }
+};
+```
+
+## Multilingual AI
+
+### 1. Automated Translation
+```javascript
+// AI-powered translation
+const translationAI = {
+  // Translate content
+  translateContent: async (content, targetLanguage) => {
+    const translation = await ai.translate({
+      content: content,
+      target: targetLanguage,
+      context: 'VoteFight voting platform',
+      quality: 'professional'
+    });
+    
+    return translation;
+  },
+  
+  // Generate localized content
+  generateLocalizedContent: async (baseContent, languages) => {
+    const localized = await ai.generateLocalizedContent({
+      base: baseContent,
+      languages: languages,
+      context: 'VoteFight',
+      cultural: true
+    });
+    
+    return localized;
+  }
+};
+```
+
+### 2. SEO Optimization AI
+```javascript
+// AI-powered SEO optimization
+const seoAI = {
+  // Optimize content for SEO
+  optimizeSEO: async (content, language) => {
+    const optimization = await ai.optimizeSEO({
+      content: content,
+      language: language,
+      platform: 'VoteFight',
+      keywords: 'voting, polls, battles'
+    });
+    
+    return optimization;
+  },
+  
+  // Generate meta tags
+  generateMetaTags: async (page, language) => {
+    const metaTags = await ai.generateMetaTags({
+      page: page,
+      language: language,
+      platform: 'VoteFight',
+      seo: 'optimized'
+    });
+    
+    return metaTags;
+  }
+};
+```

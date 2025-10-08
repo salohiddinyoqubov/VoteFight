@@ -1,0 +1,79 @@
+---
+description: VoteFight Component Patterns and UI Rules
+globs: ["**/*.jsx", "**/*.tsx", "**/components/**/*"]
+alwaysApply: true
+---
+
+# VoteFight Component Patterns
+
+## Component Structure
+```javascript
+// Standard component structure
+import React from 'react';
+import PropTypes from 'prop-types';
+
+const ComponentName = ({ prop1, prop2, onAction }) => {
+  // Hooks at the top
+  const [state, setState] = useState(initialValue);
+  
+  // Event handlers
+  const handleAction = () => {
+    // Implementation
+  };
+  
+  // Render
+  return (
+    <div className="component-wrapper">
+      {/* Component content */}
+    </div>
+  );
+};
+
+ComponentName.propTypes = {
+  prop1: PropTypes.string.isRequired,
+  prop2: PropTypes.number,
+  onAction: PropTypes.func.isRequired,
+};
+
+export default ComponentName;
+```
+
+## Media Components
+- Use WaveSurfer.js for audio players
+- Use Video.js for video players
+- Use PDF.js for document previews
+- Use Viewer.js for image zoom
+- Implement proper loading states
+- Handle media errors gracefully
+
+## Battle Components
+- Implement proper vote handling
+- Use optimistic UI updates
+- Show real-time vote counts
+- Handle voting errors
+- Implement proper animations
+- Use proper accessibility labels
+
+## User Profile Components
+- Implement @username URL structure
+- Show user statistics
+- Handle follow/unfollow actions
+- Display user battles
+- Implement proper loading states
+- Use proper SEO meta tags
+
+## Form Components
+- Use proper form validation
+- Implement proper error messages
+- Use controlled components
+- Handle form submission
+- Implement proper loading states
+- Use proper accessibility labels
+
+## Styling Rules
+- Use Tailwind CSS classes
+- Implement responsive design
+- Use proper color schemes
+- Implement dark mode support
+- Use proper spacing and typography
+- Follow design system guidelines

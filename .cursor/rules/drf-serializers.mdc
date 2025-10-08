@@ -1,0 +1,471 @@
+---
+description: Advanced DRF Serializer Patterns for VoteFight
+globs: ["**/serializers.py", "**/serializers/**/*.py"]
+alwaysApply: true
+---
+
+# Advanced DRF Serializer Patterns
+
+## Base Serializer with Common Fields
+- Use base serializer for common fields and methods
+- Implement consistent to_representation method
+- Example structure:
+```python
+# serializers/base.py
+from rest_framework import serializers
+from django.utils import timezone
+
+class BaseSerializer(serializers.ModelSerializer):
+    """Base serializer with common fields and methods"""
+    
+    created_at = serializers.DateTimeField(read_only=True)
+    updated_at = serializers.DateTimeField(read_only=True)
+    
+    def to_representation(self, instance):
+        # Implementation goes in actual file
+        pass
+```
+
+## Battle Serializer with Advanced Features
+- Use SerializerMethodField for computed fields
+- Implement nested serializers for complex relationships
+- Example structure:
+```python
+# serializers/battle_serializers.py
+from rest_framework import serializers
+from .base import BaseSerializer
+from ..models import Battle, Element, Vote
+from ..selectors import battle_get
+
+class ElementSerializer(serializers.ModelSerializer):
+    """Element serializer with vote count"""
+    vote_count = serializers.SerializerMethodField()
+    vote_percentage = serializers.SerializerMethodField()
+    
+    class Meta:
+        model = Element
+        fields = ['id', 'name', 'media_type', 'media_url', 'vote_count', 'vote_percentage']
+    
+    def get_vote_count(self, obj):
+        # Implementation goes in actual file
+        pass
+    
+    def get_vote_percentage(self, obj):
+        # Implementation goes in actual file
+        pass
+        if total_votes == 0:
+            return 0
+        return round((obj.votes.count() / total_votes) * 100, 2)
+
+class BattleListSerializer(BaseSerializer):
+    """Optimized serializer for battle lists"""
+    creator_name = serializers.CharField(source='creator.username', read_only=True)
+    creator_avatar = serializers.URLField(source='creator.avatar_url', read_only=True)
+    total_votes = serializers.SerializerMethodField()
+    is_active = serializers.SerializerMethodField()
+    elements_count = serializers.SerializerMethodField()
+    
+    class Meta:
+        model = Battle
+        fields = [
+            'id', 'title', 'description', 'category', 'deadline',
+            'creator_name', 'creator_avatar', 'total_votes', 'is_active',
+            'elements_count', 'trending_score', 'created_at'
+        ]
+    
+    def get_total_votes(self, obj):
+        return obj.votes.count()
+    
+    def get_is_active(self, obj):
+        return obj.is_active
+    
+    def get_elements_count(self, obj):
+        return obj.elements.count()
+
+class BattleDetailSerializer(BaseSerializer):
+    """Detailed serializer for single battle view"""
+    elements = ElementSerializer(many=True, read_only=True)
+    creator = serializers.SerializerMethodField()
+    user_voted = serializers.SerializerMethodField()
+    user_vote_element = serializers.SerializerMethodField()
+    engagement_stats = serializers.SerializerMethodField()
+    
+    class Meta:
+        model = Battle
+        fields = [
+            'id', 'title', 'description', 'category', 'deadline',
+            'elements', 'creator', 'user_voted', 'user_vote_element',
+            'engagement_stats', 'trending_score', 'created_at'
+        ]
+    
+    def get_creator(self, obj):
+        return {
+            'id': obj.creator.id,
+            'username': obj.creator.username,
+            'avatar_url': obj.creator.avatar_url,
+            'battles_count': obj.creator.battles.count()
+        }
+    
+    def get_user_voted(self, obj):
+        request = self.context.get('request')
+        if not request or not request.user.is_authenticated:
+            return False
+        
+        return obj.votes.filter(
+            voter_ip=self.get_client_ip(request),
+            fingerprint=self.get_fingerprint(request)
+        ).exists()
+    
+    def get_user_vote_element(self, obj):
+        request = self.context.get('request')
+        if not request or not request.user.is_authenticated:
+            return None
+        
+        vote = obj.votes.filter(
+            voter_ip=self.get_client_ip(request),
+            fingerprint=self.get_fingerprint(request)
+        ).first()
+        
+        return vote.element.id if vote else None
+    
+    def get_engagement_stats(self, obj):
+        return {
+            'total_votes': obj.votes.count(),
+            'likes': obj.likes.count(),
+            'shares': obj.shares,
+            'comments': obj.comments.count(),
+            'views': obj.views
+        }
+    
+    def get_client_ip(self, request):
+        """Extract client IP from request"""
+        x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+        if x_forwarded_for:
+            ip = x_forwarded_for.split(',')[0]
+        else:
+            ip = request.META.get('REMOTE_ADDR')
+        return ip
+    
+    def get_fingerprint(self, request):
+        """Generate browser fingerprint"""
+        # Implementation of fingerprint generation
+        return request.META.get('HTTP_USER_AGENT', '')[:50]
+```
+
+## User Profile Serializer
+```python
+# serializers/user_serializers.py
+class UserProfileSerializer(BaseSerializer):
+    """User profile serializer with statistics"""
+    battles_count = serializers.SerializerMethodField()
+    followers_count = serializers.SerializerMethodField()
+    following_count = serializers.SerializerMethodField()
+    total_votes_received = serializers.SerializerMethodField()
+    is_following = serializers.SerializerMethodField()
+    
+    class Meta:
+        model = User
+        fields = [
+            'id', 'username', 'email', 'first_name', 'last_name',
+            'avatar_url', 'bio', 'battles_count', 'followers_count',
+            'following_count', 'total_votes_received', 'is_following',
+            'created_at'
+        ]
+        read_only_fields = ['id', 'created_at']
+    
+    def get_battles_count(self, obj):
+        return obj.battles.count()
+    
+    def get_followers_count(self, obj):
+        return obj.followers.count()
+    
+    def get_following_count(self, obj):
+        return obj.following.count()
+    
+    def get_total_votes_received(self, obj):
+        return Vote.objects.filter(battle__creator=obj).count()
+    
+    def get_is_following(self, obj):
+        request = self.context.get('request')
+        if not request or not request.user.is_authenticated:
+            return False
+        return request.user.following.filter(id=obj.id).exists()
+```
+
+## Trending Serializer
+```python
+# serializers/trending_serializers.py
+class TrendingBattleSerializer(serializers.ModelSerializer):
+    """Serializer for trending battles with enhanced data"""
+    trending_rank = serializers.SerializerMethodField()
+    vote_velocity = serializers.SerializerMethodField()
+    engagement_score = serializers.SerializerMethodField()
+    category_trending = serializers.SerializerMethodField()
+    
+    class Meta:
+        model = Battle
+        fields = [
+            'id', 'title', 'description', 'category', 'trending_score',
+            'trending_rank', 'vote_velocity', 'engagement_score',
+            'category_trending', 'created_at'
+        ]
+    
+    def get_trending_rank(self, obj):
+        # Calculate rank based on trending score
+        return Battle.objects.filter(
+            trending_score__gt=obj.trending_score
+        ).count() + 1
+    
+    def get_vote_velocity(self, obj):
+        # Votes in last hour
+        from django.utils import timezone
+        from datetime import timedelta
+        
+        recent_votes = obj.votes.filter(
+            created_at__gte=timezone.now() - timedelta(hours=1)
+        ).count()
+        return recent_votes
+    
+    def get_engagement_score(self, obj):
+        return obj.likes.count() + obj.shares + obj.comments.count()
+    
+    def get_category_trending(self, obj):
+        # Check if battle is trending in its category
+        category_battles = Battle.objects.filter(category=obj.category)
+        return category_battles.filter(
+            trending_score__gt=obj.trending_score
+        ).count() < 5  # Top 5 in category
+```
+
+## Media Serializer
+```python
+# serializers/media_serializers.py
+class MediaFileSerializer(serializers.ModelSerializer):
+    """Serializer for media files with secure URLs"""
+    secure_url = serializers.SerializerMethodField()
+    thumbnail_url = serializers.SerializerMethodField()
+    file_size_mb = serializers.SerializerMethodField()
+    duration_formatted = serializers.SerializerMethodField()
+    
+    class Meta:
+        model = MediaFile
+        fields = [
+            'id', 'file_type', 'original_filename', 'file_size',
+            'file_size_mb', 'duration', 'duration_formatted',
+            'dimensions', 'secure_url', 'thumbnail_url', 'created_at'
+        ]
+    
+    def get_secure_url(self, obj):
+        # Generate time-limited secure URL
+        return self.generate_secure_url(obj)
+    
+    def get_thumbnail_url(self, obj):
+        if obj.thumbnail_url:
+            return self.generate_secure_url(obj, is_thumbnail=True)
+        return None
+    
+    def get_file_size_mb(self, obj):
+        return round(obj.file_size / (1024 * 1024), 2)
+    
+    def get_duration_formatted(self, obj):
+        if obj.duration:
+            minutes = obj.duration // 60
+            seconds = obj.duration % 60
+            return f"{minutes}:{seconds:02d}"
+        return None
+    
+    def generate_secure_url(self, obj, is_thumbnail=False):
+        # Implementation of secure URL generation
+        from django.utils import timezone
+        from datetime import timedelta
+        
+        token = self.generate_token(obj)
+        expires = timezone.now() + timedelta(hours=24)
+        
+        # Store token in database
+        SecureFileToken.objects.create(
+            token=token,
+            file_path=obj.encrypted_filename,
+            expires_at=expires
+        )
+        
+        url_type = 'thumbnail' if is_thumbnail else 'media'
+        return f"/api/{url_type}/{token}/"
+```
+
+## Custom Field Serializers
+```python
+# serializers/fields.py
+class EncryptedFileField(serializers.FileField):
+    """Custom field for encrypted file uploads"""
+    
+    def to_representation(self, value):
+        if not value:
+            return None
+        return self.generate_secure_url(value)
+    
+    def to_internal_value(self, data):
+        # Validate file type and size
+        if data.size > 50 * 1024 * 1024:  # 50MB limit
+            raise serializers.ValidationError("File too large")
+        
+        allowed_types = ['image/jpeg', 'image/png', 'video/mp4', 'audio/mpeg']
+        if data.content_type not in allowed_types:
+            raise serializers.ValidationError("Invalid file type")
+        
+        return data
+
+class UsernameField(serializers.CharField):
+    """Custom field for username validation"""
+    
+    def __init__(self, **kwargs):
+        kwargs['max_length'] = 30
+        kwargs['min_length'] = 3
+        super().__init__(**kwargs)
+    
+    def validate(self, value):
+        import re
+        
+        if not re.match(r'^[a-zA-Z0-9_]+$', value):
+            raise serializers.ValidationError(
+                "Username can only contain letters, numbers, and underscores"
+            )
+        
+        if value.startswith('_') or value.endswith('_'):
+            raise serializers.ValidationError(
+                "Username cannot start or end with underscore"
+            )
+        
+        return value
+
+class TrendingScoreField(serializers.DecimalField):
+    """Custom field for trending score with formatting"""
+    
+    def __init__(self, **kwargs):
+        kwargs['max_digits'] = 5
+        kwargs['decimal_places'] = 3
+        super().__init__(**kwargs)
+    
+    def to_representation(self, value):
+        if value is None:
+            return 0.0
+        return float(value)
+```
+
+## Serializer Validation
+```python
+# serializers/validators.py
+class BattleValidator:
+    """Custom validator for battle creation"""
+    
+    @staticmethod
+    def validate_elements(elements):
+        if len(elements) < 2:
+            raise serializers.ValidationError(
+                "Battle must have at least 2 elements"
+            )
+        
+        if len(elements) > 10:
+            raise serializers.ValidationError(
+                "Battle cannot have more than 10 elements"
+            )
+        
+        # Check for duplicate elements
+        if len(elements) != len(set(elements)):
+            raise serializers.ValidationError(
+                "Battle elements must be unique"
+            )
+        
+        return elements
+    
+    @staticmethod
+    def validate_deadline(deadline):
+        from django.utils import timezone
+        
+        if deadline and deadline <= timezone.now():
+            raise serializers.ValidationError(
+                "Deadline must be in the future"
+            )
+        
+        return deadline
+
+class VoteValidator:
+    """Custom validator for vote creation"""
+    
+    @staticmethod
+    def validate_vote_eligibility(battle, voter_ip, fingerprint):
+        # Check if already voted
+        if Vote.objects.filter(
+            battle=battle,
+            voter_ip=voter_ip,
+            fingerprint=fingerprint
+        ).exists():
+            raise serializers.ValidationError(
+                "You have already voted in this battle"
+            )
+        
+        # Check if battle is active
+        if not battle.is_active:
+            raise serializers.ValidationError(
+                "This battle is no longer active"
+            )
+        
+        return True
+```
+
+## Performance Optimized Serializers
+```python
+# serializers/optimized.py
+class OptimizedBattleListSerializer(serializers.ModelSerializer):
+    """Optimized serializer for large battle lists"""
+    
+    class Meta:
+        model = Battle
+        fields = ['id', 'title', 'category', 'trending_score', 'created_at']
+    
+    def to_representation(self, instance):
+        # Use select_related and prefetch_related in views
+        # This serializer assumes proper queryset optimization
+        return super().to_representation(instance)
+
+class OptimizedUserSerializer(serializers.ModelSerializer):
+    """Optimized serializer for user lists"""
+    
+    class Meta:
+        model = User
+        fields = ['id', 'username', 'avatar_url']
+```
+
+## Serializer Mixins
+```python
+# serializers/mixins.py
+class TimestampMixin:
+    """Mixin for adding timestamp fields"""
+    
+    created_at = serializers.DateTimeField(read_only=True)
+    updated_at = serializers.DateTimeField(read_only=True)
+
+class UserContextMixin:
+    """Mixin for adding user context to serializers"""
+    
+    def get_user_context(self):
+        request = self.context.get('request')
+        if request and request.user.is_authenticated:
+            return {
+                'user': request.user,
+                'ip': self.get_client_ip(request),
+                'fingerprint': self.get_fingerprint(request)
+            }
+        return None
+
+class TrendingMixin:
+    """Mixin for adding trending data"""
+    
+    trending_score = serializers.DecimalField(max_digits=5, decimal_places=3, read_only=True)
+    trending_rank = serializers.SerializerMethodField()
+    
+    def get_trending_rank(self, obj):
+        return Battle.objects.filter(
+            trending_score__gt=obj.trending_score
+        ).count() + 1
+```

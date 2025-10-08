@@ -1,0 +1,61 @@
+---
+description: VoteFight SEO and Performance Rules
+globs: ["**/*.js", "**/*.jsx", "**/*.ts", "**/*.tsx"]
+alwaysApply: true
+---
+
+# VoteFight SEO Rules
+
+## Server-Side Rendering (SSR)
+- Use getServerSideProps for dynamic content
+- Use getStaticProps for static content
+- Implement proper meta tags for all pages
+- Use Next.js Head component for SEO
+- Implement structured data (JSON-LD)
+- Use proper canonical URLs
+
+## Meta Tags Requirements
+```javascript
+// Required meta tags for all pages
+<Head>
+  <title>Page Title - VoteFight</title>
+  <meta name="description" content="Page description" />
+  <meta property="og:title" content="Page Title" />
+  <meta property="og:description" content="Page description" />
+  <meta property="og:image" content="Image URL" />
+  <meta property="og:url" content="Page URL" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="canonical" href="Canonical URL" />
+</Head>
+```
+
+## URL Structure
+- Use clean, descriptive URLs
+- Implement proper redirects
+- Use kebab-case for multi-word URLs
+- Implement proper sitemap generation
+- Use robots.txt for crawler guidance
+
+## Performance Optimization
+- Implement image optimization
+- Use lazy loading for images
+- Minimize JavaScript bundles
+- Use CDN for static assets
+- Implement proper caching strategies
+- Monitor Core Web Vitals
+
+## Accessibility
+- Use semantic HTML elements
+- Implement proper ARIA labels
+- Ensure keyboard navigation
+- Use proper color contrast
+- Implement screen reader support
+- Test with accessibility tools
+
+## Content Optimization
+- Use proper heading hierarchy (H1, H2, H3)
+- Implement internal linking
+- Use descriptive alt text for images
+- Optimize page loading speed
+- Implement proper error pages
+- Use structured data for rich snippets

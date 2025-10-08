@@ -1,0 +1,100 @@
+---
+description: VoteFight Testing and Quality Assurance Rules
+globs: ["**/*.test.js", "**/*.test.ts", "**/*.test.py", "**/tests/**/*"]
+alwaysApply: true
+---
+
+# VoteFight Testing Rules
+
+## Frontend Testing (Jest + React Testing Library)
+- Use React Testing Library for component testing
+- Test user interactions and component behavior
+- Example structure:
+```javascript
+// Component testing pattern
+import { render, screen, fireEvent } from '@testing-library/react';
+import BattleCard from '../BattleCard';
+
+describe('BattleCard', () => {
+  it('renders battle title correctly', () => {
+    const battle = { title: 'Test Battle', id: 1 };
+    render(<BattleCard battle={battle} />);
+    expect(screen.getByText('Test Battle')).toBeInTheDocument();
+  });
+  
+  it('handles vote action correctly', () => {
+    // Implementation goes in actual file
+    pass
+  });
+});
+```
+
+## Backend Testing (Django Styleguide Pattern)
+- Use factory_boy for test data generation
+- Test services, views, and serializers
+- Example structure:
+```python
+# Testing with factories (Django Styleguide approach)
+from django.test import TestCase
+from django.urls import reverse
+from rest_framework.test import APITestCase
+from rest_framework import status
+from .factories import UserFactory, BattleFactory, ElementFactory
+from .services import battle_create, battle_vote
+
+class BattleAPITestCase(APITestCase):
+    def setUp(self):
+        self.user = UserFactory()
+        self.client.force_authenticate(user=self.user)
+    
+    def test_create_battle(self):
+        # Implementation goes in actual file
+        pass
+            'description': 'Test Description',
+            'elements': ['Option 1', 'Option 2']
+        }
+        response = self.client.post('/api/battles/', data)
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+    
+    def test_battle_vote_service(self):
+        battle = BattleFactory(creator=self.user)
+        element = ElementFactory(battle=battle)
+        
+        vote = battle_vote(
+            battle=battle,
+            element=element,
+            voter_ip='127.0.0.1',
+            fingerprint='test_fingerprint'
+        )
+        
+        self.assertEqual(vote.battle, battle)
+        self.assertEqual(vote.element, element)
+```
+
+## Testing Requirements
+- Write unit tests for all components
+- Write integration tests for API endpoints
+- Test error handling scenarios
+- Test authentication and authorization
+- Test vote fraud prevention
+- Test media upload functionality
+- Test SEO meta tags
+- Test responsive design
+- Test accessibility features
+
+## Test Coverage
+- Aim for 80%+ code coverage
+- Test all API endpoints
+- Test all user interactions
+- Test error scenarios
+- Test edge cases
+- Test performance requirements
+
+## Quality Assurance
+- Use ESLint and Prettier
+- Use TypeScript strict mode
+- Implement proper error boundaries
+- Test on multiple browsers
+- Test on mobile devices
+- Use accessibility testing tools
+- Monitor performance metrics

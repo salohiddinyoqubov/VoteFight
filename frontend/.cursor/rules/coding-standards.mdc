@@ -1,0 +1,65 @@
+---
+description: VoteFight Coding Standards and Conventions
+globs: ["**/*.js", "**/*.jsx", "**/*.ts", "**/*.tsx", "**/*.py"]
+alwaysApply: true
+---
+
+# VoteFight Coding Standards
+
+## JavaScript/TypeScript Rules
+- Use TypeScript for all new files
+- Use functional components with hooks
+- Implement proper error handling with try-catch
+- Use async/await instead of .then()
+- Follow ESLint and Prettier configurations
+- Use meaningful variable and function names
+- Implement proper JSDoc comments for complex functions
+
+## Python/Django Rules
+- Follow PEP 8 style guide
+- Use type hints for all function parameters and returns
+- Implement proper exception handling
+- Use Django's built-in security features
+- Follow DRY (Don't Repeat Yourself) principle
+- Use meaningful model and field names
+- Implement proper serializers for API responses
+
+## File Naming Conventions
+- Components: PascalCase (e.g., `BattleCard.jsx`)
+- Pages: kebab-case (e.g., `battle-detail.js`)
+- Utilities: camelCase (e.g., `apiUtils.js`)
+- Constants: UPPER_SNAKE_CASE (e.g., `API_ENDPOINTS.js`)
+- Python files: snake_case (e.g., `battle_views.py`)
+
+## Import Organization
+```javascript
+// 1. React imports
+import React from 'react';
+import { useState, useEffect } from 'react';
+
+// 2. Next.js imports
+import { useRouter } from 'next/router';
+import Head from 'next/head';
+
+// 3. Third-party libraries
+import { format } from 'date-fns';
+
+// 4. Internal imports
+import { apiClient } from '../utils/api';
+import BattleCard from '../components/BattleCard';
+```
+
+## Error Handling
+- Always implement proper error boundaries
+- Use meaningful error messages
+- Log errors for debugging
+- Implement fallback UI for errors
+- Use try-catch for async operations
+
+## Constants and Enums
+- **Centralize all constants** in dedicated files
+- **Use enums** instead of magic strings/numbers
+- **Environment-based configuration** for different settings
+- **No hardcoded values** in components or services
+- **Consistent naming** for constants (UPPER_SNAKE_CASE)
+- **Type-safe enums** with proper validation

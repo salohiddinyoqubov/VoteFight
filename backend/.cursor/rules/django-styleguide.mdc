@@ -1,0 +1,198 @@
+---
+description: Django Styleguide Best Practices for VoteFight
+globs: ["**/*.py", "**/models.py", "**/views.py", "**/serializers.py", "**/services.py", "**/selectors.py"]
+alwaysApply: true
+---
+
+# Django Styleguide Best Practices
+
+## Key Principles
+- Write clear, technical responses with precise Django examples
+- Use Django's built-in features and tools wherever possible
+- Prioritize readability and maintainability; follow Django's coding style guide (PEP 8 compliance)
+- Use descriptive variable and function names; adhere to naming conventions
+- Structure project in a modular way using Django apps for reusability and separation of concerns
+
+## Project Structure
+```plaintext
+vote_fight_backend/
+├── manage.py
+├── vote_fight/
+│   ├── __init__.py
+│   ├── settings/
+│   │   ├── base.py
+│   │   ├── development.py
+│   │   └── production.py
+│   ├── urls.py
+│   └── wsgi.py
+├── battles/
+│   ├── models/
+│   ├── services/
+│   ├── selectors/
+│   ├── serializers/
+│   ├── views/
+│   └── tests/
+├── users/
+├── media/
+├── tasks/
+└── utils/
+```
+
+## Tech Stack
+- Python 3.10+
+- Django + Django REST Framework
+- Celery (for background tasks)
+- Redis (for caching and task queues)
+- PostgreSQL
+
+## Naming Conventions
+- Follow Django naming conventions
+- Use lowercase with underscores for functions and variables
+- Class names should use CamelCase
+- Constants should be uppercase with underscores
+
+## Service Layer Architecture
+- Business logic should be in services, not views or models
+- Use dependency injection for services
+- Example structure:
+```python
+# services/battle_services.py
+def battle_create(*, user: User, title: str) -> Battle:
+    # Implementation goes in actual file
+    pass
+```
+
+## Selectors Pattern
+- Data fetching logic separated from business logic
+- Use select_related and prefetch_related for optimization
+- Example structure:
+```python
+# selectors/battle_selectors.py
+def battle_list(*, user: User = None) -> QuerySet:
+    # Implementation goes in actual file
+    pass
+```
+
+## Base Model Pattern
+- Common fields and methods in base model
+- Use clean() and full_clean() for validation
+- Example structure:
+```python
+# models/base.py
+class BaseModel(models.Model):
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    
+    class Meta:
+        abstract = True
+```
+
+## Django/Python Usage
+- Use Django's class-based views (CBVs) for complex views
+- Leverage Django's ORM for database interactions
+- Use Django's built-in user model and authentication framework
+- Utilize Django's form and model form classes for form handling
+- Follow the MVT (Model-View-Template) pattern strictly
+- Use middleware judiciously for cross-cutting concerns
+
+## API Views with Caching
+- Use service layer in views
+- Implement Redis caching for performance
+- Cache invalidation on data changes
+- Example structure:
+```python
+# views/battle_views.py
+class BattleDetailAPIView(RetrieveAPIView):
+    def get_object(self):
+        # Try cache first, then database
+        pass
+```
+
+## Error Handling and Validation
+- Implement error handling at the view level
+- Use Django's validation framework
+- Prefer try-except blocks for handling exceptions
+- Customize error pages (404, 500) to improve user experience
+- Use Django signals to decouple error handling
+- Example structure:
+```python
+# exceptions.py
+class VoteFightAPIException(APIException):
+    status_code = 400
+    default_detail = 'A server error occurred.'
+```
+
+## Testing
+- Use Django's built-in tools for testing (unittest and pytest-django)
+- Write unit tests for models, views, and forms
+- Use integration tests for critical workflows
+- Use factory_boy for test data generation
+- Example structure:
+```python
+# tests/factories.py
+class UserFactory(factory.django.DjangoModelFactory):
+    class Meta:
+        model = User
+```
+
+## Security
+- Apply Django's security best practices (CSRF protection, SQL injection protection, XSS prevention)
+- Use Django's built-in security tools
+- Leverage Django's caching framework for performance
+- Use Django's middleware for authentication, logging, and security
+
+## Performance Optimization
+- Optimize query performance using select_related and prefetch_related
+- Use Django's cache framework with Redis backend
+- Implement database indexing and query optimization
+- Use asynchronous views and background tasks (via Celery)
+- Optimize static file handling with Django's static file management
+
+## Celery Tasks
+- Background tasks for heavy operations
+- Cache updates and statistics
+- Example structure:
+```python
+# tasks/battle_tasks.py
+@shared_task
+def update_trending_scores():
+    # Implementation goes in actual file
+    pass
+```
+
+## Model Validation
+- Use clean() method for validation
+- Implement proper field validation
+- Example structure:
+```python
+# models/battle.py
+class Battle(BaseModel):
+    def clean(self):
+        super().clean()
+        # Validation logic goes here
+```
+
+## Settings Configuration
+- Environment-based configuration
+- Use DJANGO_ prefix for environment variables
+- Example structure:
+```python
+# settings/base.py
+DJANGO_SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
+```
+
+## Git Usage
+- Use clear and descriptive commit messages
+- Follow a consistent branching strategy
+
+## Documentation and Comments
+- Maintain clear README with setup instructions
+- Use docstrings for classes, methods, and functions
+- Add inline comments only for complex logic explaining "why" not "what"
+- Document API endpoints and data models
+
+## Development Workflow
+- Use virtual environments for dependency management
+- Implement PEP 8 checks
+- Run automated tests
+- Follow semantic versioning

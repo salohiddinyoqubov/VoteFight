@@ -1,0 +1,129 @@
+---
+description: VoteFight API and Backend Patterns
+globs: ["**/*.py", "**/api/**/*", "**/views.py", "**/serializers.py"]
+alwaysApply: true
+---
+
+# VoteFight API Patterns
+
+## Django REST Framework Patterns (Following Django Styleguide)
+- Use service-based API views with business logic separation
+- Implement proper error handling and validation
+- Use caching for performance optimization
+- Example structure:
+```python
+# Service-based API views
+from rest_framework import viewsets, status
+from rest_framework.decorators import action
+from rest_framework.response import Response
+from .services import battle_create, battle_vote, battle_get
+from .selectors import battle_list
+
+class BattleViewSet(viewsets.ModelViewSet):
+    serializer_class = BattleSerializer
+    permission_classes = [IsAuthenticatedOrReadOnly]
+    
+    def get_queryset(self):
+        return battle_list(
+            user=self.request.user,
+            category=self.request.query_params.get('category')
+        )
+    
+    def perform_create(self, serializer):
+        battle = battle_create(
+            user=self.request.user,
+            **serializer.validated_data
+        )
+        serializer.instance = battle
+    
+    @action(detail=True, methods=['post'])
+    def vote(self, request, pk=None):
+        # Implementation goes in actual file
+        pass
+```
+
+## Advanced Serializer Patterns
+```python
+# Nested serializers for complex relationships
+class BattleWithElementsSerializer(BaseSerializer):
+    elements = ElementSerializer(many=True, read_only=True)
+    creator = UserProfileSerializer(read_only=True)
+    
+    class Meta:
+        model = Battle
+        fields = ['id', 'title', 'elements', 'creator']
+
+# Custom serializer methods
+class BattleSerializer(BaseSerializer):
+    user_voted = serializers.SerializerMethodField()
+    engagement_stats = serializers.SerializerMethodField()
+    
+    def get_user_voted(self, obj):
+        request = self.context.get('request')
+        if not request or not request.user.is_authenticated:
+            return False
+        return obj.votes.filter(
+            voter_ip=self.get_client_ip(request),
+            fingerprint=self.get_fingerprint(request)
+        ).exists()
+    
+    def get_engagement_stats(self, obj):
+        return {
+            'total_votes': obj.votes.count(),
+            'likes': obj.likes.count(),
+            'shares': obj.shares,
+            'comments': obj.comments.count()
+        }
+```
+
+## API Response Format
+```python
+# Standard API response format
+{
+    "success": true,
+    "data": {
+        # Response data
+    },
+    "message": "Success message",
+    "errors": [],
+    "meta": {
+        "pagination": {
+            "page": 1,
+            "per_page": 20,
+            "total": 100
+        }
+    }
+}
+```
+
+## Error Handling
+- Use proper HTTP status codes
+- Implement consistent error responses
+- Log all errors for debugging
+- Use proper exception handling
+- Implement proper validation
+- Return meaningful error messages
+
+## Authentication
+- Use JWT tokens
+- Implement proper token refresh
+- Use proper permission classes
+- Implement rate limiting
+- Log authentication attempts
+- Use secure token storage
+
+## Database Patterns
+- Use proper model relationships
+- Implement proper migrations
+- Use database indexes
+- Implement proper queries
+- Use database transactions
+- Implement proper cleanup
+
+## Security Patterns
+- Validate all inputs
+- Use proper serializers
+- Implement CSRF protection
+- Use proper CORS settings
+- Implement rate limiting
+- Log security events

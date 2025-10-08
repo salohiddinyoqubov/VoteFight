@@ -1,0 +1,66 @@
+---
+description: Automated Testing Agent for VoteFight Development
+globs: ["**/*.js", "**/*.jsx", "**/*.ts", "**/*.tsx", "**/*.py"]
+alwaysApply: true
+---
+
+# VoteFight Automated Testing Agent
+
+## Safe Agent Development
+- Use Background Agent (Ctrl+E) for autonomous tasks
+- Implement safety checks before automated actions
+- Use MCP servers for external integrations
+- Create automated testing workflows
+- Implement rollback mechanisms
+
+## Browser Automation
+- Use @Browser for automated testing
+- Implement visual regression testing
+- Test responsive design across devices
+- Validate accessibility features
+- Test multilingual functionality
+
+## Console Debugging Automation
+- Automatically capture console errors
+- Monitor performance metrics
+- Track API response times
+- Validate vote fraud prevention
+- Monitor cache hit rates
+
+## Automated Testing Workflow
+1. **Code Changes Detected**
+   - Run unit tests automatically
+   - Execute integration tests
+   - Check code quality metrics
+
+2. **Browser Testing**
+   - Launch browser automatically
+   - Test critical user flows
+   - Validate vote functionality
+   - Check responsive design
+
+3. **Performance Monitoring**
+   - Measure Core Web Vitals
+   - Check bundle size
+   - Monitor API performance
+   - Validate caching effectiveness
+
+4. **Security Validation**
+   - Test vote fraud prevention
+   - Validate authentication
+   - Check file upload security
+   - Monitor rate limiting
+
+## Safety Mechanisms
+- **Rollback on failure** - automatic revert of changes
+- **Approval gates** - require human approval for critical changes
+- **Testing thresholds** - minimum test coverage requirements
+- **Performance limits** - prevent performance regressions
+- **Security checks** - validate security measures
+
+## MCP Server Integration
+- **Linear integration** - create tasks for failed tests
+- **Slack notifications** - alert team of issues
+- **GitHub integration** - create issues for bugs
+- **Monitoring tools** - integrate with Sentry, DataDog
+- **Documentation** - auto-update docs on changes

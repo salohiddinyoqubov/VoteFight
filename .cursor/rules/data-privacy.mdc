@@ -1,0 +1,55 @@
+---
+description: Data Privacy and GDPR Compliance for VoteFight
+globs: ["**/*.js", "**/*.jsx", "**/*.ts", "**/*.tsx", "**/*.py"]
+alwaysApply: true
+---
+
+# VoteFight Data Privacy Guidelines
+
+## GDPR Compliance
+- Implement proper consent management
+- Provide data portability features
+- Implement right to be forgotten
+- Use data minimization principles
+- Implement proper data retention
+- Provide clear privacy policies
+
+## Data Collection
+- Only collect necessary data
+- Implement proper consent mechanisms
+- Use anonymization where possible
+- Implement data minimization
+- Provide clear data usage policies
+- Use proper data classification
+
+## User Consent
+- Implement cookie consent
+- Provide clear privacy notices
+- Use granular consent options
+- Implement consent withdrawal
+- Provide consent history
+- Use proper consent records
+
+## Data Security
+- Encrypt sensitive data
+- Use secure data transmission
+- Implement proper access controls
+- Use secure data storage
+- Implement data backup security
+- Use proper data disposal
+
+## User Rights
+- Implement data access requests
+- Provide data portability
+- Implement data deletion
+- Provide data correction
+- Implement consent withdrawal
+- Provide data processing information
+
+## International Compliance
+- Comply with local data protection laws
+- Implement proper data transfers
+- Use appropriate safeguards
+- Implement data localization
+- Use proper data processing agreements
+- Implement cross-border compliance

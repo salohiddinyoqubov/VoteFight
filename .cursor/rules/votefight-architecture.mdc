@@ -1,0 +1,41 @@
+---
+description: VoteFight Architecture and Tech Stack Rules
+globs: ["**/*.js", "**/*.jsx", "**/*.ts", "**/*.tsx", "**/*.py"]
+alwaysApply: true
+---
+
+# VoteFight Architecture Rules
+
+## Tech Stack
+- **Frontend**: Next.js 14+ with App Router, TypeScript, Tailwind CSS, Headless UI
+- **Backend**: Django REST Framework with PostgreSQL, Redis
+- **Deployment**: Vercel (frontend), Railway (backend), CloudFlare CDN
+- **Media**: AWS S3, encrypted file storage, time-limited URLs
+
+## Core Principles
+- **SEO-First**: All pages must be server-side rendered for search engines
+- **Mobile-First**: Responsive design with touch-friendly interfaces
+- **Security-First**: Encrypted files, fraud prevention, secure authentication
+- **Performance-First**: Optimized images, lazy loading, CDN delivery
+
+## URL Structure
+- User profiles: `votefight.com/@username`
+- Battles: `votefight.com/battles/[id]`
+- Categories: `votefight.com/categories/[slug]`
+- Trending: `votefight.com/trending`
+
+## Component Architecture
+- Use functional components with hooks
+- Implement proper TypeScript interfaces
+- Follow Next.js App Router patterns
+- Use Tailwind CSS for styling
+- Implement proper error boundaries
+
+## Django Styleguide Architecture
+- **Service Layer**: Business logic in services, not views or models
+- **Selectors**: Data fetching logic separated from business logic
+- **Base Models**: Common fields and methods in base model
+- **Validation**: Use clean() and full_clean() methods
+- **Testing**: Use factories for test data generation
+- **Error Handling**: Consistent API error responses
+- **Celery**: Background tasks for heavy operations

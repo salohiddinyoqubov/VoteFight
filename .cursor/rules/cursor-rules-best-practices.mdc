@@ -1,0 +1,200 @@
+---
+description: Cursor Rules Best Practices - Comprehensive Guide
+globs: ["**/.cursor/rules/*.mdc"]
+alwaysApply: true
+---
+
+# Cursor Rules Best Practices - Complete Guide
+
+## Rule Hierarchy & Precedence
+
+### 1. Rule Evaluation Order
+1. **Local (Manual)**: Explicitly included with `@ruleName`
+2. **Auto Attached**: Files matching glob patterns are referenced
+3. **Agent Requested**: AI chooses to include if needed
+4. **Always**: Automatically included in all contexts
+
+### 2. Rule Types
+- **Always**: Always included in context
+- **Auto Attached**: Included when referenced files match glob patterns
+- **Agent Requested**: Available to AI, which decides whether to use it
+- **Manual**: Only used when explicitly invoked with @ruleName
+
+## .mdc File Structure
+
+### ✅ Proper .mdc Format
+```yaml
+---
+description: Brief description of the rule's purpose
+globs: ["**/*.js", "**/*.ts", "**/*.py"]  # File patterns to match
+alwaysApply: false  # or true for always-included rules
+---
+
+# Rule content goes here
+- Use specific, actionable guidelines
+- Include examples, not full implementations
+- Focus on patterns and standards
+```
+
+### ❌ Avoid These Patterns
+- Full code implementations
+- Large code blocks
+- Production-ready code
+- Duplicate content across rules
+
+## What Cursor Rules Should Contain
+
+### ✅ DO Include:
+- **Guidelines and patterns** for code organization
+- **Naming conventions** and standards
+- **Architecture principles** and best practices
+- **Example code snippets** (not full implementations)
+- **Configuration patterns** and structures
+- **Testing approaches** and methodologies
+- **Security guidelines** and requirements
+
+### ❌ DON'T Include:
+- **Full code implementations** - these belong in actual source files
+- **Complete working code** - use examples and patterns instead
+- **Large code blocks** - keep examples concise
+- **Production-ready code** - focus on guidance, not implementation
+
+## Best Practices for .mdc Files
+
+### 1. Keep Examples Concise
+- Show **structure** and **patterns**, not full implementations
+- Use `// ...` to indicate omitted code
+- Focus on **guidelines** rather than complete code
+
+### 2. Focus on Standards
+- **Naming conventions**
+- **File organization**
+- **Architecture patterns**
+- **Best practices**
+
+### 3. Provide Context
+- **Why** certain patterns are used
+- **When** to apply specific approaches
+- **How** to structure code
+
+### 4. Reference Implementation
+- Point to **actual source files** for full implementations
+- Use **examples** to illustrate concepts
+- Keep **rules** focused on guidance
+
+## Context Files
+
+### instructions.md
+- Full project specification
+- Features, technologies, structure
+- Build steps and deployment
+- Split into multiple files if needed
+
+### roadmap.md
+- Milestones and future features
+- Long-term planning guidance
+- Incremental development roadmap
+
+## Composer Usage
+
+### Agent Mode (⌘.)
+- Auto-pulls context
+- Executes commands
+- Edits files automatically
+
+### Normal Mode
+- File and context-aware assistance
+- Manual context selection
+
+### Context Commands
+- `@Files` – include specific files
+- `@Folders` – include folders
+- `@Code` – reference specific code blocks
+- `@Docs` – reference documentation
+- `@Web` – search online
+
+## .cursorignore Configuration
+
+```bash
+# .cursorignore
+legacy-code/
+debug.log
+node_modules/
+*.tmp
+```
+
+## Advanced Rule Patterns
+
+### 1. Focused, Composable Rules
+- Keep rules under 500 lines
+- Write focused, single-purpose rules
+- Reuse rule blocks instead of duplicating
+
+### 2. Concrete Names and Descriptions
+- Give rules clear, descriptive names
+- Write meaningful descriptions
+- Use `@filename.ts` references for anchors
+
+### 3. Project-Centric Solutions
+- Include tech stack details
+- Document design decisions
+- Specify workflow expectations
+
+## Rule Content Guidelines
+
+### System Prompt
+- Project description and goals
+- Key principles and constraints
+- Development philosophy
+
+### Project Structure
+- Directory organization
+- File naming conventions
+- Import/export patterns
+
+### Tech Stack Guidelines
+- Framework-specific patterns
+- Library usage standards
+- Configuration approaches
+
+### Development Workflow
+- Git usage patterns
+- Testing strategies
+- Build and deployment processes
+
+## Example Rule Structure
+
+```markdown
+---
+description: API Response Standards
+globs: ["**/api/**/*.py", "**/views/**/*.py"]
+alwaysApply: false
+---
+
+# API Response Standards
+
+## Response Format
+- Use consistent response structure
+- Include proper HTTP status codes
+- Example format:
+```json
+{
+  "success": true,
+  "data": { /* response data */ },
+  "message": "Success message",
+  "errors": []
+}
+```
+
+## Error Handling
+- Implement proper error responses
+- Use meaningful error messages
+- Log errors for debugging
+```
+
+## Resources
+
+- [Cursor Directory](https://cursor.directory/) – Community rule examples
+- [Dot Cursor Rules](https://dotcursorrules.com/) – More templates
+- [Awesome Cursor Rules](https://github.com/PatrickJS/awesome-cursorrules) – Community repo
+- [Official Cursor Docs](https://cursor.com/docs) – Official documentation

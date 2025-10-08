@@ -1,0 +1,296 @@
+---
+description: Automated Agent Workflows for VoteFight Development
+globs: ["**/*.js", "**/*.jsx", "**/*.ts", "**/*.tsx", "**/*.py"]
+alwaysApply: true
+---
+
+# VoteFight Agent Workflows
+
+## Automated Development Workflows
+
+### 1. Code Change Detection
+```javascript
+// Agent workflow for code changes
+const handleCodeChange = async (changedFiles) => {
+  // 1. Run tests automatically
+  await runTests(changedFiles);
+  
+  // 2. Check code quality
+  await runLinting(changedFiles);
+  
+  // 3. Run type checking
+  await runTypeCheck(changedFiles);
+  
+  // 4. If all checks pass, proceed to browser testing
+  if (allTestsPassed) {
+    await launchBrowserTesting();
+  }
+};
+```
+
+### 2. Browser Testing Automation
+```javascript
+// Automated browser testing workflow
+const browserTestingWorkflow = async () => {
+  // 1. Launch browser safely
+  const browser = await launch({ 
+    headless: false,
+    args: ['--no-sandbox', '--disable-setuid-sandbox']
+  });
+  
+  // 2. Test critical VoteFight flows
+  await testVoteCreation();
+  await testVoteSubmission();
+  await testVoteFraudPrevention();
+  await testMultilingualSupport();
+  
+  // 3. Performance testing
+  await measureCoreWebVitals();
+  await checkBundleSize();
+  
+  // 4. Accessibility testing
+  await runAccessibilityAudit();
+  
+  // 5. Clean up
+  await browser.close();
+};
+```
+
+### 3. Console Debugging Automation
+```javascript
+// Automated console monitoring
+const setupConsoleDebugging = () => {
+  // Monitor console errors
+  page.on('console', async (msg) => {
+    const type = msg.type();
+    const text = msg.text();
+    
+    if (type === 'error') {
+      // Log error and take screenshot
+      console.error('Browser Error:', text);
+      await page.screenshot({ 
+        path: `debug/error-${Date.now()}.png` 
+      });
+      
+      // Send to monitoring
+      await sendToMonitoring('console_error', {
+        error: text,
+        timestamp: new Date(),
+        url: page.url()
+      });
+    }
+  });
+  
+  // Monitor network requests
+  page.on('request', request => {
+    if (request.url().includes('/api/')) {
+      console.log('API Request:', request.url());
+    }
+  });
+  
+  // Monitor responses
+  page.on('response', response => {
+    if (response.status() >= 400) {
+      console.error('API Error:', response.url(), response.status());
+    }
+  });
+};
+```
+
+## Safety Mechanisms
+
+### 1. Pre-Action Safety Checks
+```python
+# Django safety checks
+def safe_agent_action(action_type, **kwargs):
+    """Execute agent action with safety checks"""
+    
+    # 1. Check if in safe environment
+    if not settings.DEBUG and not settings.STAGING:
+        raise Exception("Agent actions only allowed in dev/staging")
+    
+    # 2. Validate action type
+    allowed_actions = ['test', 'deploy', 'migrate', 'cache_clear']
+    if action_type not in allowed_actions:
+        raise Exception(f"Action {action_type} not allowed")
+    
+    # 3. Check system resources
+    if get_memory_usage() > 0.8:  # 80% memory usage
+        raise Exception("System resources too high")
+    
+    # 4. Execute with rollback capability
+    try:
+        return execute_action(action_type, **kwargs)
+    except Exception as e:
+        rollback_action(action_type)
+        raise e
+```
+
+### 2. Automated Rollback
+```javascript
+// Frontend rollback mechanism
+const rollbackOnFailure = async (action, rollbackAction) => {
+  try {
+    const result = await action();
+    return result;
+  } catch (error) {
+    console.error('Action failed, rolling back:', error);
+    
+    // Execute rollback
+    await rollbackAction();
+    
+    // Notify team
+    await notifyTeam('rollback_executed', {
+      action: action.name,
+      error: error.message,
+      timestamp: new Date()
+    });
+    
+    throw error;
+  }
+};
+```
+
+### 3. Human Approval Gates
+```python
+# Human approval for critical actions
+def require_human_approval(action_type, details):
+    """Require human approval for critical actions"""
+    
+    critical_actions = [
+        'database_migration',
+        'production_deploy',
+        'security_update',
+        'user_data_change'
+    ]
+    
+    if action_type in critical_actions:
+        # Send notification to team
+        send_slack_notification(f"Approval required for {action_type}")
+        
+        # Wait for approval
+        approval = wait_for_approval(action_type, details)
+        
+        if not approval:
+            raise Exception("Human approval required but not granted")
+    
+    return True
+```
+
+## Monitoring Integration
+
+### 1. Real-time Monitoring
+```javascript
+// Real-time monitoring setup
+const setupRealTimeMonitoring = () => {
+  // Performance monitoring
+  const observer = new PerformanceObserver((list) => {
+    for (const entry of list.getEntries()) {
+      if (entry.entryType === 'measure') {
+        sendToMonitoring('performance_metric', {
+          name: entry.name,
+          duration: entry.duration,
+          timestamp: Date.now()
+        });
+      }
+    }
+  });
+  
+  observer.observe({ entryTypes: ['measure'] });
+  
+  // Error monitoring
+  window.addEventListener('error', (event) => {
+    sendToSentry('javascript_error', {
+      message: event.message,
+      filename: event.filename,
+      lineno: event.lineno,
+      colno: event.colno,
+      error: event.error
+    });
+  });
+};
+```
+
+### 2. Automated Alerts
+```python
+# Django monitoring alerts
+def setup_automated_alerts():
+    """Setup automated monitoring alerts"""
+    
+    # Monitor vote fraud attempts
+    if detect_vote_fraud():
+        send_alert('vote_fraud_detected', {
+            'severity': 'high',
+            'action': 'investigate_vote_patterns'
+        })
+    
+    # Monitor performance degradation
+    if api_response_time > 2.0:  # 2 seconds
+        send_alert('performance_degradation', {
+            'severity': 'medium',
+            'response_time': api_response_time
+        })
+    
+    # Monitor error rates
+    if error_rate > 0.05:  # 5% error rate
+        send_alert('high_error_rate', {
+            'severity': 'high',
+            'error_rate': error_rate
+        })
+```
+
+## Agent Workflow Examples
+
+### 1. Daily Health Check
+```javascript
+// Daily automated health check
+const dailyHealthCheck = async () => {
+  // 1. Test critical functionality
+  await testVoteSystem();
+  await testAuthentication();
+  await testFileUpload();
+  
+  // 2. Check performance metrics
+  await checkCoreWebVitals();
+  await checkAPIResponseTimes();
+  
+  // 3. Validate security measures
+  await testVoteFraudPrevention();
+  await testFileSecurity();
+  
+  // 4. Generate health report
+  const report = await generateHealthReport();
+  
+  // 5. Send to team if issues found
+  if (report.issues.length > 0) {
+    await sendHealthReport(report);
+  }
+};
+```
+
+### 2. Pre-deployment Validation
+```python
+# Pre-deployment validation workflow
+def pre_deployment_validation():
+    # 1. Run all tests
+    test_results = run_all_tests()
+    if not test_results.passed:
+        raise Exception("Tests failed, deployment aborted")
+    
+    # 2. Check code quality
+    quality_score = check_code_quality()
+    if quality_score < 0.8:
+        raise Exception("Code quality too low, deployment aborted")
+    
+    # 3. Security scan
+    security_issues = run_security_scan()
+    if security_issues:
+        raise Exception("Security issues found, deployment aborted")
+    
+    # 4. Performance check
+    performance_metrics = check_performance()
+    if performance_metrics.degraded:
+        raise Exception("Performance regression detected")
+    
+    return True
+```

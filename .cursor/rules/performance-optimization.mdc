@@ -1,0 +1,55 @@
+---
+description: Performance Optimization Guidelines for VoteFight
+globs: ["**/*.js", "**/*.jsx", "**/*.ts", "**/*.tsx", "**/*.py"]
+alwaysApply: true
+---
+
+# VoteFight Performance Optimization
+
+## Frontend Performance
+- Use React.memo for expensive components
+- Implement lazy loading for routes and components
+- Optimize images with next/image
+- Use dynamic imports for heavy libraries
+- Implement proper caching strategies
+- Minimize bundle size with tree shaking
+
+## Backend Performance
+- Use database query optimization
+- Implement proper indexing
+- Use Redis for caching
+- Implement database connection pooling
+- Use async/await for I/O operations
+- Monitor database query performance
+
+## Caching Strategy
+- Cache battle data for 5 minutes
+- Cache user profiles for 10 minutes
+- Cache trending data for 30 minutes
+- Use CDN for static assets
+- Implement browser caching
+- Use service worker for offline support
+
+## Database Optimization
+- Use select_related and prefetch_related
+- Implement proper database indexes
+- Use database query optimization
+- Monitor slow queries
+- Implement database connection pooling
+- Use read replicas for heavy reads
+
+## API Performance
+- Implement API rate limiting
+- Use pagination for large datasets
+- Compress API responses
+- Use HTTP/2 for better performance
+- Implement proper error handling
+- Monitor API response times
+
+## Monitoring and Analytics
+- Monitor Core Web Vitals
+- Track API response times
+- Monitor database performance
+- Use performance profiling tools
+- Implement error tracking
+- Monitor user experience metrics

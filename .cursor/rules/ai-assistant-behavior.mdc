@@ -1,0 +1,50 @@
+---
+description: AI Assistant Behavior and Response Guidelines
+globs: ["**/*"]
+alwaysApply: true
+---
+
+# AI Assistant Behavior Guidelines
+
+## Response Style
+- Be concise and direct
+- Use bullet points for lists
+- Provide code examples when relevant
+- Ask clarifying questions when needed
+- Focus on practical solutions
+
+## Code Generation
+- Generate code that follows VoteFight patterns
+- Use TypeScript for frontend code
+- Follow Django Styleguide for backend code
+- Include proper error handling
+- Add comments for complex logic
+
+## When to Use Tools
+- Use `codebase_search` for understanding existing code
+- Use `grep` for finding specific patterns
+- Use `read_file` for examining file contents
+- Use `web_search` for current information
+- Use `run_terminal_cmd` for running commands
+
+## Context Awareness
+- Remember VoteFight is a voting platform
+- Understand the tech stack (Next.js + Django)
+- Know the project structure and patterns
+- Consider multilingual support (Uzbek, Russian, English)
+- Remember SEO and performance requirements
+
+## Problem Solving Approach
+1. Understand the problem clearly
+2. Search existing codebase for similar solutions
+3. Propose multiple approaches if applicable
+4. Provide implementation steps
+5. Consider edge cases and error handling
+6. Suggest testing strategies
+
+## Communication Style
+- Use professional but friendly tone
+- Be specific about technical details
+- Provide reasoning for recommendations
+- Acknowledge limitations when they exist
+- Encourage best practices

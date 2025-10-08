@@ -1,0 +1,389 @@
+---
+description: Centralized Constants and Enums for VoteFight
+globs: ["**/constants/**/*.js", "**/enums/**/*.js", "**/config/**/*.js", "**/models.py", "**/serializers.py"]
+alwaysApply: true
+---
+
+# Centralized Constants and Enums
+
+## Frontend Constants
+```javascript
+// Example structure - implement in actual files
+export const API_ENDPOINTS = {
+  BASE_URL: process.env.NEXT_PUBLIC_API_URL,
+  BATTLES: '/battles/',
+  // ... other endpoints
+};
+
+export const HTTP_STATUS = {
+  OK: 200,
+  CREATED: 201,
+  BAD_REQUEST: 400,
+  // ... other status codes
+};
+
+export const CACHE_KEYS = {
+  BATTLE_DETAIL: (id) => `battle_${id}_detail`,
+  // ... other cache keys
+};
+
+export const CACHE_TIMEOUTS = {
+  BATTLE_DETAIL: 300, // 5 minutes
+  // ... other timeouts
+};
+
+export const PAGINATION = {
+  DEFAULT_PAGE_SIZE: 20,
+  MAX_PAGE_SIZE: 100,
+  TRENDING_PAGE_SIZE: 10,
+  USER_BATTLES_PAGE_SIZE: 15
+};
+
+export const FILE_UPLOAD = {
+  MAX_SIZE: 50 * 1024 * 1024, // 50MB
+  ALLOWED_IMAGE_TYPES: ['image/jpeg', 'image/png', 'image/webp'],
+  ALLOWED_VIDEO_TYPES: ['video/mp4', 'video/webm'],
+  ALLOWED_AUDIO_TYPES: ['audio/mpeg', 'audio/wav', 'audio/ogg'],
+  ALLOWED_DOCUMENT_TYPES: ['application/pdf', 'text/plain']
+};
+
+export const UI_CONSTANTS = {
+  ANIMATION_DURATION: 300,
+  DEBOUNCE_DELAY: 500,
+  TOAST_DURATION: 3000,
+  MODAL_ANIMATION: 200
+};
+```
+
+## Frontend Enums
+```javascript
+// enums/index.js
+export const BATTLE_STATUS = {
+  ACTIVE: 'active',
+  EXPIRED: 'expired',
+  DRAFT: 'draft',
+  ARCHIVED: 'archived'
+};
+
+export const MEDIA_TYPES = {
+  IMAGE: 'image',
+  VIDEO: 'video',
+  AUDIO: 'audio',
+  DOCUMENT: 'document'
+};
+
+export const VOTE_FRAUD_PREVENTION = {
+  METHODS: {
+    IP_TRACKING: 'ip_tracking',
+    FINGERPRINTING: 'fingerprinting',
+    SESSION_BASED: 'session_based',
+    RATE_LIMITING: 'rate_limiting'
+  },
+  COOLDOWN_PERIODS: {
+    VOTE_COOLDOWN: 60, // 1 minute
+    RATE_LIMIT_WINDOW: 300, // 5 minutes
+    MAX_VOTES_PER_WINDOW: 10
+  }
+};
+
+export const USER_ROLES = {
+  USER: 'user',
+  MODERATOR: 'moderator',
+  ADMIN: 'admin',
+  SUPER_ADMIN: 'super_admin'
+};
+
+export const NOTIFICATION_TYPES = {
+  VOTE_RECEIVED: 'vote_received',
+  BATTLE_TRENDING: 'battle_trending',
+  USER_FOLLOWED: 'user_followed',
+  BATTLE_EXPIRED: 'battle_expired'
+};
+
+export const TRENDING_ALGORITHM = {
+  FACTORS: {
+    VOTE_VELOCITY: 'vote_velocity',
+    ENGAGEMENT_SCORE: 'engagement_score',
+    TIME_DECAY: 'time_decay',
+    CATEGORY_TREND: 'category_trend'
+  },
+  WEIGHTS: {
+    VOTE_VELOCITY: 0.4,
+    ENGAGEMENT_SCORE: 0.3,
+    TIME_DECAY: 0.2,
+    CATEGORY_TREND: 0.1
+  }
+};
+```
+
+## Backend Constants (Django)
+```python
+# constants.py
+from django.conf import settings
+from enum import Enum
+
+class BattleStatus(Enum):
+    ACTIVE = 'active'
+    EXPIRED = 'expired'
+    DRAFT = 'draft'
+    ARCHIVED = 'archived'
+
+class MediaType(Enum):
+    IMAGE = 'image'
+    VIDEO = 'video'
+    AUDIO = 'audio'
+    DOCUMENT = 'document'
+
+class UserRole(Enum):
+    USER = 'user'
+    MODERATOR = 'moderator'
+    ADMIN = 'admin'
+    SUPER_ADMIN = 'super_admin'
+
+class NotificationType(Enum):
+    VOTE_RECEIVED = 'vote_received'
+    BATTLE_TRENDING = 'battle_trending'
+    USER_FOLLOWED = 'user_followed'
+    BATTLE_EXPIRED = 'battle_expired'
+
+# API Constants
+API_ENDPOINTS = {
+    'BATTLES': '/api/battles/',
+    'USERS': '/api/users/',
+    'VOTES': '/api/votes/',
+    'MEDIA': '/api/media/',
+    'TRENDING': '/api/trending/',
+    'CATEGORIES': '/api/categories/',
+}
+
+# Cache Constants
+CACHE_KEYS = {
+    'BATTLE_DETAIL': lambda id: f'battle_{id}_detail',
+    'BATTLE_STATS': lambda id: f'battle_{id}_stats',
+    'USER_PROFILE': lambda username: f'user_{username}_profile',
+    'TRENDING_BATTLES': 'trending_battles',
+    'CATEGORY_BATTLES': lambda category: f'category_{category}_battles'
+}
+
+CACHE_TIMEOUTS = {
+    'BATTLE_DETAIL': 300,  # 5 minutes
+    'BATTLE_STATS': 300,   # 5 minutes
+    'USER_PROFILE': 600,   # 10 minutes
+    'TRENDING': 1800,      # 30 minutes
+    'CATEGORIES': 3600     # 1 hour
+}
+
+# File Upload Constants
+FILE_UPLOAD = {
+    'MAX_SIZE': 50 * 1024 * 1024,  # 50MB
+    'ALLOWED_IMAGE_TYPES': ['image/jpeg', 'image/png', 'image/webp'],
+    'ALLOWED_VIDEO_TYPES': ['video/mp4', 'video/webm'],
+    'ALLOWED_AUDIO_TYPES': ['audio/mpeg', 'audio/wav', 'audio/ogg'],
+    'ALLOWED_DOCUMENT_TYPES': ['application/pdf', 'text/plain']
+}
+
+# Pagination Constants
+PAGINATION = {
+    'DEFAULT_PAGE_SIZE': 20,
+    'MAX_PAGE_SIZE': 100,
+    'TRENDING_PAGE_SIZE': 10,
+    'USER_BATTLES_PAGE_SIZE': 15
+}
+
+# Vote Fraud Prevention
+VOTE_FRAUD_PREVENTION = {
+    'METHODS': {
+        'IP_TRACKING': 'ip_tracking',
+        'FINGERPRINTING': 'fingerprinting',
+        'SESSION_BASED': 'session_based',
+        'RATE_LIMITING': 'rate_limiting'
+    },
+    'COOLDOWN_PERIODS': {
+        'VOTE_COOLDOWN': 60,  # 1 minute
+        'RATE_LIMIT_WINDOW': 300,  # 5 minutes
+        'MAX_VOTES_PER_WINDOW': 10
+    }
+}
+
+# Trending Algorithm Constants
+TRENDING_ALGORITHM = {
+    'FACTORS': {
+        'VOTE_VELOCITY': 'vote_velocity',
+        'ENGAGEMENT_SCORE': 'engagement_score',
+        'TIME_DECAY': 'time_decay',
+        'CATEGORY_TREND': 'category_trend'
+    },
+    'WEIGHTS': {
+        'VOTE_VELOCITY': 0.4,
+        'ENGAGEMENT_SCORE': 0.3,
+        'TIME_DECAY': 0.2,
+        'CATEGORY_TREND': 0.1
+    }
+}
+```
+
+## Django Model Choices
+```python
+# models/choices.py
+from django.db import models
+
+class BattleStatusChoices(models.TextChoices):
+    ACTIVE = 'active', 'Active'
+    EXPIRED = 'expired', 'Expired'
+    DRAFT = 'draft', 'Draft'
+    ARCHIVED = 'archived', 'Archived'
+
+class MediaTypeChoices(models.TextChoices):
+    IMAGE = 'image', 'Image'
+    VIDEO = 'video', 'Video'
+    AUDIO = 'audio', 'Audio'
+    DOCUMENT = 'document', 'Document'
+
+class UserRoleChoices(models.TextChoices):
+    USER = 'user', 'User'
+    MODERATOR = 'moderator', 'Moderator'
+    ADMIN = 'admin', 'Admin'
+    SUPER_ADMIN = 'super_admin', 'Super Admin'
+
+class NotificationTypeChoices(models.TextChoices):
+    VOTE_RECEIVED = 'vote_received', 'Vote Received'
+    BATTLE_TRENDING = 'battle_trending', 'Battle Trending'
+    USER_FOLLOWED = 'user_followed', 'User Followed'
+    BATTLE_EXPIRED = 'battle_expired', 'Battle Expired'
+
+class CategoryChoices(models.TextChoices):
+    TECHNOLOGY = 'technology', 'Technology'
+    SPORTS = 'sports', 'Sports'
+    ENTERTAINMENT = 'entertainment', 'Entertainment'
+    FOOD = 'food', 'Food'
+    TRAVEL = 'travel', 'Travel'
+    FASHION = 'fashion', 'Fashion'
+    MUSIC = 'music', 'Music'
+    GAMING = 'gaming', 'Gaming'
+    POLITICS = 'politics', 'Politics'
+    OTHER = 'other', 'Other'
+```
+
+## Configuration Constants
+```python
+# config/settings.py
+import os
+from pathlib import Path
+
+# Environment Variables
+DJANGO_SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
+DJANGO_DEBUG = os.getenv('DJANGO_DEBUG', 'False').lower() == 'true'
+DJANGO_DATABASE_URL = os.getenv('DJANGO_DATABASE_URL')
+
+# Redis Configuration
+REDIS_URL = os.getenv('REDIS_URL', 'redis://localhost:6379/0')
+REDIS_CACHE_TIMEOUT = int(os.getenv('REDIS_CACHE_TIMEOUT', '300'))
+
+# Celery Configuration
+CELERY_BROKER_URL = os.getenv('CELERY_BROKER_URL', REDIS_URL)
+CELERY_RESULT_BACKEND = os.getenv('CELERY_RESULT_BACKEND', REDIS_URL)
+
+# File Upload Configuration
+MAX_FILE_SIZE = int(os.getenv('MAX_FILE_SIZE', '52428800'))  # 50MB
+ALLOWED_IMAGE_TYPES = os.getenv('ALLOWED_IMAGE_TYPES', 'image/jpeg,image/png,image/webp').split(',')
+ALLOWED_VIDEO_TYPES = os.getenv('ALLOWED_VIDEO_TYPES', 'video/mp4,video/webm').split(',')
+ALLOWED_AUDIO_TYPES = os.getenv('ALLOWED_AUDIO_TYPES', 'audio/mpeg,audio/wav,audio/ogg').split(',')
+
+# Pagination Configuration
+DEFAULT_PAGE_SIZE = int(os.getenv('DEFAULT_PAGE_SIZE', '20'))
+MAX_PAGE_SIZE = int(os.getenv('MAX_PAGE_SIZE', '100'))
+
+# Vote Fraud Prevention
+VOTE_COOLDOWN_SECONDS = int(os.getenv('VOTE_COOLDOWN_SECONDS', '60'))
+RATE_LIMIT_WINDOW_SECONDS = int(os.getenv('RATE_LIMIT_WINDOW_SECONDS', '300'))
+MAX_VOTES_PER_WINDOW = int(os.getenv('MAX_VOTES_PER_WINDOW', '10'))
+
+# Trending Algorithm
+TRENDING_UPDATE_INTERVAL = int(os.getenv('TRENDING_UPDATE_INTERVAL', '300'))  # 5 minutes
+TRENDING_VOTE_VELOCITY_WEIGHT = float(os.getenv('TRENDING_VOTE_VELOCITY_WEIGHT', '0.4'))
+TRENDING_ENGAGEMENT_WEIGHT = float(os.getenv('TRENDING_ENGAGEMENT_WEIGHT', '0.3'))
+TRENDING_TIME_DECAY_WEIGHT = float(os.getenv('TRENDING_TIME_DECAY_WEIGHT', '0.2'))
+TRENDING_CATEGORY_WEIGHT = float(os.getenv('TRENDING_CATEGORY_WEIGHT', '0.1'))
+```
+
+## Frontend Configuration
+```javascript
+// config/constants.js
+export const CONFIG = {
+  API_BASE_URL: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api',
+  APP_NAME: 'VoteFight',
+  VERSION: '1.0.0',
+  SUPPORTED_LANGUAGES: ['uz', 'ru', 'en'],
+  DEFAULT_LANGUAGE: 'uz',
+  CACHE_UPDATE_INTERVAL: 5 * 60 * 1000, // 5 minutes
+  ANIMATION_DURATION: 300,
+  TOAST_DURATION: 3000,
+  DEBOUNCE_DELAY: 500
+};
+
+export const THEME = {
+  COLORS: {
+    PRIMARY: '#EF4444', // Red
+    SECONDARY: '#F97316', // Orange
+    ACCENT: '#EAB308', // Yellow
+    SUCCESS: '#10B981', // Green
+    WARNING: '#F59E0B', // Amber
+    ERROR: '#EF4444', // Red
+    INFO: '#3B82F6' // Blue
+  },
+  BREAKPOINTS: {
+    SM: '640px',
+    MD: '768px',
+    LG: '1024px',
+    XL: '1280px',
+    '2XL': '1536px'
+  }
+};
+
+export const VALIDATION = {
+  USERNAME: {
+    MIN_LENGTH: 3,
+    MAX_LENGTH: 30,
+    PATTERN: /^[a-zA-Z0-9_]+$/
+  },
+  PASSWORD: {
+    MIN_LENGTH: 8,
+    REQUIRE_UPPERCASE: true,
+    REQUIRE_LOWERCASE: true,
+    REQUIRE_NUMBERS: true,
+    REQUIRE_SPECIAL: false
+  },
+  BATTLE: {
+    TITLE_MIN_LENGTH: 3,
+    TITLE_MAX_LENGTH: 200,
+    DESCRIPTION_MAX_LENGTH: 1000,
+    MIN_ELEMENTS: 2,
+    MAX_ELEMENTS: 10
+  }
+};
+```
+
+## Usage Examples
+```javascript
+// Instead of hardcoded values
+// ❌ Bad
+const response = await fetch('/api/battles/');
+const timeout = 300;
+
+// ✅ Good
+import { API_ENDPOINTS, CACHE_TIMEOUTS } from '@/constants';
+const response = await fetch(API_ENDPOINTS.BASE_URL + API_ENDPOINTS.BATTLES);
+const timeout = CACHE_TIMEOUTS.BATTLE_DETAIL;
+```
+
+```python
+# Instead of hardcoded values
+# ❌ Bad
+battle.status = 'active'
+cache.set('battle_123', data, timeout=300)
+
+# ✅ Good
+from constants import BattleStatus, CACHE_TIMEOUTS, CACHE_KEYS
+battle.status = BattleStatus.ACTIVE.value
+cache.set(CACHE_KEYS['BATTLE_DETAIL'](123), data, timeout=CACHE_TIMEOUTS['BATTLE_DETAIL'])
+```

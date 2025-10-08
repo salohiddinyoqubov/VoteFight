@@ -1,0 +1,43 @@
+---
+description: VoteFight Development Workflow and Automation
+globs: ["**/*.js", "**/*.jsx", "**/*.ts", "**/*.tsx", "**/*.py"]
+alwaysApply: true
+---
+
+# VoteFight Development Workflow
+
+## Development Commands
+- Use `npm run dev` for frontend development
+- Use `python manage.py runserver` for backend development
+- Use `npm run build` for production builds
+- Use `python manage.py test` for running tests
+
+## Code Analysis and Quality
+When asked to analyze the VoteFight app:
+1. Run dev server with `npm run dev`
+2. Check for TypeScript errors with `npm run type-check`
+3. Run linting with `npm run lint`
+4. Fetch logs from console
+5. Suggest performance improvements
+6. Check for accessibility issues
+
+## Documentation Generation
+Help draft documentation by:
+- Extracting code comments from components
+- Analyzing README.md structure
+- Generating API documentation from Django views
+- Creating component documentation from React components
+- Generating markdown documentation for new features
+
+## Performance Monitoring
+- Check bundle size with `npm run analyze`
+- Monitor Core Web Vitals
+- Analyze database query performance
+- Check Redis cache hit rates
+- Monitor API response times
+
+## Testing Workflow
+- Run unit tests with `npm run test`
+- Run integration tests with `python manage.py test`
+- Check test coverage with `npm run test:coverage`
+- Run E2E tests with `npm run test:e2e`

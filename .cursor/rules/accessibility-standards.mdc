@@ -1,0 +1,55 @@
+---
+description: Accessibility Standards for VoteFight
+globs: ["**/*.js", "**/*.jsx", "**/*.ts", "**/*.tsx"]
+alwaysApply: true
+---
+
+# VoteFight Accessibility Standards
+
+## WCAG 2.1 Compliance
+- Ensure proper color contrast ratios
+- Implement keyboard navigation
+- Use semantic HTML elements
+- Provide alternative text for images
+- Implement screen reader support
+- Use proper heading hierarchy
+
+## Keyboard Navigation
+- All interactive elements must be keyboard accessible
+- Use proper tab order
+- Implement focus indicators
+- Use skip links for navigation
+- Support keyboard shortcuts
+- Implement proper focus management
+
+## Screen Reader Support
+- Use proper ARIA labels
+- Implement semantic HTML
+- Provide descriptive text
+- Use proper form labels
+- Implement live regions for updates
+- Use proper heading structure
+
+## Visual Accessibility
+- Ensure sufficient color contrast
+- Don't rely on color alone for information
+- Use clear typography
+- Implement high contrast mode
+- Support zoom up to 200%
+- Use proper spacing and sizing
+
+## Motor Accessibility
+- Use large click targets (44px minimum)
+- Implement proper spacing
+- Support touch navigation
+- Use proper gesture support
+- Implement voice control support
+- Support assistive technologies
+
+## Cognitive Accessibility
+- Use clear and simple language
+- Implement consistent navigation
+- Provide clear error messages
+- Use proper loading states
+- Implement proper feedback
+- Support multiple input methods

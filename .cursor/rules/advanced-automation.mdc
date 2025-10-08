@@ -1,0 +1,416 @@
+---
+description: Advanced Automation Techniques for VoteFight Development
+globs: ["**/*.js", "**/*.jsx", "**/*.ts", "**/*.tsx", "**/*.py"]
+alwaysApply: true
+---
+
+# Advanced Automation for VoteFight
+
+## MCP Server Integrations
+
+### 1. Linear Integration
+```javascript
+// Automated task creation and management
+const linearIntegration = {
+  // Create tasks for failed tests
+  createTaskFromTestFailure: async (testResult) => {
+    await linear.createIssue({
+      title: `Fix failing test: ${testResult.testName}`,
+      description: testResult.error,
+      priority: 'High',
+      labels: ['bug', 'test-failure']
+    });
+  },
+  
+  // Update task status based on deployment
+  updateTaskStatus: async (taskId, status) => {
+    await linear.updateIssue(taskId, { state: status });
+  }
+};
+```
+
+### 2. Slack Notifications
+```javascript
+// Automated team notifications
+const slackIntegration = {
+  // Notify on deployment success/failure
+  notifyDeployment: async (status, details) => {
+    await slack.postMessage({
+      channel: '#votefight-dev',
+      text: `Deployment ${status}: ${details}`,
+      attachments: [{
+        color: status === 'success' ? 'good' : 'danger',
+        fields: [{
+          title: 'Environment',
+          value: details.environment,
+          short: true
+        }]
+      }]
+    });
+  },
+  
+  // Daily health reports
+  sendHealthReport: async (report) => {
+    await slack.postMessage({
+      channel: '#votefight-health',
+      text: `Daily Health Report: ${report.summary}`,
+      blocks: generateHealthBlocks(report)
+    });
+  }
+};
+```
+
+### 3. GitHub Integration
+```javascript
+// Automated GitHub workflows
+const githubIntegration = {
+  // Create issues for bugs
+  createBugReport: async (error, context) => {
+    await github.createIssue({
+      title: `Bug: ${error.message}`,
+      body: `**Error:** ${error.message}\n**Context:** ${context}`,
+      labels: ['bug', 'auto-generated']
+    });
+  },
+  
+  // Auto-create PRs for fixes
+  createFixPR: async (fixDetails) => {
+    await github.createPullRequest({
+      title: `Fix: ${fixDetails.issue}`,
+      body: `Automated fix for ${fixDetails.issue}`,
+      head: fixDetails.branch,
+      base: 'main'
+    });
+  }
+};
+```
+
+## Advanced Background Agent Workflows
+
+### 1. Intelligent Code Analysis
+```javascript
+// Smart code analysis and suggestions
+const intelligentAnalysis = {
+  // Analyze code patterns and suggest improvements
+  analyzeCodePatterns: async (filePath) => {
+    const analysis = await analyzeCode(filePath);
+    
+    if (analysis.complexity > 10) {
+      return {
+        suggestion: 'Consider refactoring - high complexity detected',
+        action: 'suggest_refactor',
+        priority: 'medium'
+      };
+    }
+    
+    if (analysis.duplication > 0.3) {
+      return {
+        suggestion: 'Code duplication detected - consider extracting common logic',
+        action: 'suggest_extract',
+        priority: 'high'
+      };
+    }
+  },
+  
+  // Performance optimization suggestions
+  suggestOptimizations: async (component) => {
+    const suggestions = [];
+    
+    if (component.hasUnnecessaryRenders) {
+      suggestions.push('Consider using React.memo()');
+    }
+    
+    if (component.hasLargeBundle) {
+      suggestions.push('Consider code splitting');
+    }
+    
+    return suggestions;
+  }
+};
+```
+
+### 2. Automated Refactoring
+```javascript
+// Safe automated refactoring
+const automatedRefactoring = {
+  // Extract common patterns
+  extractCommonPatterns: async (codebase) => {
+    const patterns = await findCommonPatterns(codebase);
+    
+    for (const pattern of patterns) {
+      if (pattern.frequency > 3) {
+        await createSharedComponent(pattern);
+        await updateAllUsages(pattern);
+      }
+    }
+  },
+  
+  // Optimize imports
+  optimizeImports: async (filePath) => {
+    const imports = await analyzeImports(filePath);
+    const optimized = await optimizeImportStructure(imports);
+    await updateFile(filePath, optimized);
+  },
+  
+  // Remove dead code
+  removeDeadCode: async (codebase) => {
+    const deadCode = await findDeadCode(codebase);
+    for (const code of deadCode) {
+      await removeCode(code);
+    }
+  }
+};
+```
+
+### 3. Smart Testing Automation
+```javascript
+// Intelligent test generation and execution
+const smartTesting = {
+  // Generate tests based on code analysis
+  generateTestsFromCode: async (functionCode) => {
+    const testCases = await analyzeFunction(functionCode);
+    const tests = await generateTestCases(testCases);
+    return tests;
+  },
+  
+  // Smart test selection
+  selectRelevantTests: async (changedFiles) => {
+    const affectedTests = await findAffectedTests(changedFiles);
+    return affectedTests;
+  },
+  
+  // Performance testing
+  runPerformanceTests: async (component) => {
+    const metrics = await measurePerformance(component);
+    if (metrics.bundleSize > 100000) {
+      await suggestOptimizations(component);
+    }
+  }
+};
+```
+
+## Advanced Monitoring and Analytics
+
+### 1. Real-time Performance Monitoring
+```javascript
+// Comprehensive performance monitoring
+const performanceMonitoring = {
+  // Monitor Core Web Vitals
+  monitorWebVitals: () => {
+    getCLS(console.log);
+    getFID(console.log);
+    getFCP(console.log);
+    getLCP(console.log);
+    getTTFB(console.log);
+  },
+  
+  // Monitor API performance
+  monitorAPIPerformance: async () => {
+    const endpoints = ['/api/battles/', '/api/votes/', '/api/users/'];
+    
+    for (const endpoint of endpoints) {
+      const start = performance.now();
+      await fetch(endpoint);
+      const duration = performance.now() - start;
+      
+      if (duration > 1000) {
+        await alertSlowAPI(endpoint, duration);
+      }
+    }
+  },
+  
+  // Monitor memory usage
+  monitorMemoryUsage: () => {
+    if (performance.memory) {
+      const memoryUsage = performance.memory.usedJSHeapSize;
+      if (memoryUsage > 100000000) { // 100MB
+        console.warn('High memory usage detected');
+      }
+    }
+  }
+};
+```
+
+### 2. Automated Quality Gates
+```javascript
+// Quality gates for automated deployment
+const qualityGates = {
+  // Code quality checks
+  checkCodeQuality: async (codebase) => {
+    const quality = await analyzeCodeQuality(codebase);
+    
+    if (quality.complexity > 10) {
+      throw new Error('Code complexity too high');
+    }
+    
+    if (quality.coverage < 80) {
+      throw new Error('Test coverage too low');
+    }
+    
+    return true;
+  },
+  
+  // Security checks
+  checkSecurity: async (codebase) => {
+    const vulnerabilities = await scanForVulnerabilities(codebase);
+    
+    if (vulnerabilities.length > 0) {
+      throw new Error(`Security vulnerabilities found: ${vulnerabilities.join(', ')}`);
+    }
+    
+    return true;
+  },
+  
+  // Performance checks
+  checkPerformance: async (build) => {
+    const bundleSize = await getBundleSize(build);
+    
+    if (bundleSize > 500000) { // 500KB
+      throw new Error('Bundle size too large');
+    }
+    
+    return true;
+  }
+};
+```
+
+## Advanced Development Workflows
+
+### 1. Intelligent Feature Development
+```javascript
+// Smart feature development workflow
+const featureDevelopment = {
+  // Analyze requirements and suggest implementation
+  analyzeRequirements: async (requirements) => {
+    const analysis = await analyzeRequirements(requirements);
+    
+    return {
+      suggestedArchitecture: analysis.architecture,
+      estimatedComplexity: analysis.complexity,
+      suggestedTests: analysis.tests,
+      potentialIssues: analysis.issues
+    };
+  },
+  
+  // Generate implementation plan
+  generateImplementationPlan: async (feature) => {
+    const plan = await createImplementationPlan(feature);
+    
+    return {
+      phases: plan.phases,
+      dependencies: plan.dependencies,
+      estimatedTime: plan.time,
+      risks: plan.risks
+    };
+  },
+  
+  // Auto-generate documentation
+  generateDocumentation: async (code) => {
+    const docs = await generateDocsFromCode(code);
+    return docs;
+  }
+};
+```
+
+### 2. Automated Code Review
+```javascript
+// Automated code review process
+const automatedCodeReview = {
+  // Review code changes
+  reviewCodeChanges: async (changes) => {
+    const review = await analyzeCodeChanges(changes);
+    
+    return {
+      issues: review.issues,
+      suggestions: review.suggestions,
+      approval: review.approval
+    };
+  },
+  
+  // Check for best practices
+  checkBestPractices: async (code) => {
+    const practices = await analyzeBestPractices(code);
+    
+    return {
+      violations: practices.violations,
+      suggestions: practices.suggestions
+    };
+  },
+  
+  // Validate architecture
+  validateArchitecture: async (changes) => {
+    const validation = await validateArchitecture(changes);
+    
+    return {
+      valid: validation.valid,
+      issues: validation.issues
+    };
+  }
+};
+```
+
+## Advanced Error Handling and Recovery
+
+### 1. Intelligent Error Recovery
+```javascript
+// Smart error recovery mechanisms
+const errorRecovery = {
+  // Analyze error patterns
+  analyzeErrorPatterns: async (errors) => {
+    const patterns = await findErrorPatterns(errors);
+    
+    return {
+      commonCauses: patterns.commonCauses,
+      suggestedFixes: patterns.suggestedFixes,
+      prevention: patterns.prevention
+    };
+  },
+  
+  // Auto-fix common issues
+  autoFixCommonIssues: async (error) => {
+    const fix = await suggestFix(error);
+    
+    if (fix.confidence > 0.8) {
+      await applyFix(fix);
+    }
+    
+    return fix;
+  },
+  
+  // Rollback on critical errors
+  rollbackOnCriticalError: async (error) => {
+    if (error.severity === 'critical') {
+      await rollbackToLastStable();
+      await notifyTeam('Critical error - rolled back');
+    }
+  }
+};
+```
+
+### 2. Predictive Maintenance
+```javascript
+// Predictive maintenance for VoteFight
+const predictiveMaintenance = {
+  // Predict potential issues
+  predictIssues: async (codebase) => {
+    const predictions = await analyzeCodebase(codebase);
+    
+    return {
+      potentialBugs: predictions.bugs,
+      performanceIssues: predictions.performance,
+      securityRisks: predictions.security
+    };
+  },
+  
+  // Suggest preventive measures
+  suggestPreventiveMeasures: async (predictions) => {
+    const measures = await generatePreventiveMeasures(predictions);
+    
+    return {
+      codeImprovements: measures.code,
+      architectureChanges: measures.architecture,
+      monitoringAdditions: measures.monitoring
+    };
+  }
+};
+```

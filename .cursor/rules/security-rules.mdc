@@ -1,0 +1,54 @@
+---
+description: VoteFight Security and Fraud Prevention Rules
+globs: ["**/*.py", "**/*.js", "**/*.ts"]
+alwaysApply: true
+---
+
+# VoteFight Security Rules
+
+## Authentication & Authorization
+- Use JWT tokens for authentication
+- Implement proper session management
+- Validate all user inputs
+- Use HTTPS for all communications
+- Implement rate limiting on API endpoints
+- Use secure password hashing (bcrypt)
+
+## Vote Fraud Prevention
+- Track IP addresses and browser fingerprints
+- Implement vote cooldown periods
+- Use session-based tracking for shared IPs
+- Validate vote authenticity
+- Implement CAPTCHA for suspicious activity
+- Log all voting activities for audit
+
+## File Security
+- Encrypt all uploaded files
+- Use time-limited access URLs
+- Validate file types and sizes
+- Scan files for malware
+- Implement secure file storage
+- Use CDN with proper headers
+
+## API Security
+- Validate all API inputs
+- Use proper HTTP status codes
+- Implement CORS correctly
+- Use API rate limiting
+- Log all API requests
+- Implement proper error handling
+
+## Database Security
+- Use parameterized queries
+- Implement proper database permissions
+- Encrypt sensitive data
+- Use database connection pooling
+- Implement proper backup strategies
+- Monitor database access
+
+## Content Security
+- Implement content moderation
+- Use AI for inappropriate content detection
+- Implement user reporting system
+- Validate all user-generated content
+- Implement proper data retention policies

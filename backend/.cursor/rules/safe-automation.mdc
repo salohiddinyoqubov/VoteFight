@@ -1,0 +1,142 @@
+---
+description: Safe Automation Guidelines for VoteFight Development
+globs: ["**/*.js", "**/*.jsx", "**/*.ts", "**/*.tsx", "**/*.py"]
+alwaysApply: true
+---
+
+# Safe Automation for VoteFight
+
+## Agent Safety Principles
+- **Always test before deploy** - run comprehensive tests
+- **Use staging environment** - never test on production
+- **Implement rollback mechanisms** - automatic revert on failure
+- **Require human approval** - for critical changes
+- **Monitor continuously** - track all automated actions
+
+## Automated Browser Testing
+```javascript
+// Safe browser automation pattern
+const safeBrowserTest = async () => {
+  try {
+    // 1. Launch browser in safe mode
+    const browser = await launch({ headless: false });
+    
+    // 2. Navigate to staging environment
+    await page.goto(process.env.STAGING_URL);
+    
+    // 3. Test critical user flows
+    await testVoteFlow();
+    await testAuthentication();
+    await testResponsiveDesign();
+    
+    // 4. Capture screenshots for visual regression
+    await page.screenshot({ path: 'test-results/vote-flow.png' });
+    
+    // 5. Close browser safely
+    await browser.close();
+  } catch (error) {
+    // Rollback on failure
+    await rollbackChanges();
+    throw error;
+  }
+};
+```
+
+## Console Debugging Automation
+```javascript
+// Automated console monitoring
+const setupConsoleMonitoring = () => {
+  // Capture console errors
+  page.on('console', msg => {
+    if (msg.type() === 'error') {
+      console.error('Browser Error:', msg.text());
+      // Send to monitoring service
+      sendToMonitoring('console_error', msg.text());
+    }
+  });
+  
+  // Monitor performance metrics
+  page.on('metrics', metrics => {
+    if (metrics.JSHeapUsedSize > 100000000) { // 100MB
+      console.warn('High memory usage detected');
+      sendToMonitoring('memory_warning', metrics);
+    }
+  });
+};
+```
+
+## Safety Checkpoints
+1. **Pre-deployment Checks**
+   - All tests must pass
+   - Performance benchmarks met
+   - Security scans clean
+   - Accessibility compliance
+
+2. **During Testing**
+   - Monitor resource usage
+   - Check for memory leaks
+   - Validate vote integrity
+   - Test fraud prevention
+
+3. **Post-deployment**
+   - Monitor error rates
+   - Check performance metrics
+   - Validate user experience
+   - Monitor security events
+
+## Rollback Mechanisms
+```python
+# Django rollback example
+def safe_deploy():
+    try:
+        # Run migrations
+        call_command('migrate')
+        
+        # Test critical functionality
+        test_vote_system()
+        test_authentication()
+        
+        # If all tests pass, continue
+        return True
+    except Exception as e:
+        # Rollback on failure
+        call_command('migrate', 'previous_version')
+        logger.error(f"Deployment failed, rolled back: {e}")
+        return False
+```
+
+## Human Approval Gates
+- **Database changes** - require manual approval
+- **Security updates** - human review required
+- **Production deployments** - manual confirmation
+- **User data changes** - explicit approval
+- **API breaking changes** - team review
+
+## Monitoring Integration
+```javascript
+// Automated monitoring setup
+const setupMonitoring = () => {
+  // Performance monitoring
+  if (typeof window !== 'undefined') {
+    // Web Vitals monitoring
+    getCLS(console.log);
+    getFID(console.log);
+    getFCP(console.log);
+    getLCP(console.log);
+    getTTFB(console.log);
+  }
+  
+  // Error tracking
+  window.addEventListener('error', (event) => {
+    sendToSentry('javascript_error', event.error);
+  });
+  
+  // API monitoring
+  fetch('/api/battles/')
+    .then(response => {
+      if (!response.ok) {
+        sendToMonitoring('api_error', response.status);
+      }
+    });
+};
+```

@@ -1,0 +1,63 @@
+---
+description: Deployment and Production Guidelines for VoteFight
+globs: ["**/*.js", "**/*.jsx", "**/*.ts", "**/*.tsx", "**/*.py", "**/Dockerfile", "**/docker-compose.yml"]
+alwaysApply: true
+---
+
+# VoteFight Deployment Guidelines
+
+## Environment Configuration
+- Use environment variables for all configuration
+- Separate development, staging, and production configs
+- Use secure secret management
+- Implement proper logging and monitoring
+- Use containerization for consistency
+- Follow 12-factor app principles
+
+## Frontend Deployment (Vercel)
+- Use Next.js build optimization
+- Implement proper caching headers
+- Use CDN for static assets
+- Configure environment variables
+- Set up custom domains
+- Implement proper redirects
+
+## Backend Deployment (Railway/Render)
+- Use Docker for containerization
+- Implement proper health checks
+- Use managed databases
+- Configure Redis for caching
+- Set up monitoring and logging
+- Implement proper backup strategies
+
+## Database Deployment
+- Use managed PostgreSQL
+- Implement proper backups
+- Configure read replicas
+- Use connection pooling
+- Monitor database performance
+- Implement proper security
+
+## Security in Production
+- Use HTTPS everywhere
+- Implement proper CORS
+- Use secure headers
+- Implement rate limiting
+- Use proper authentication
+- Monitor for security issues
+
+## Monitoring and Logging
+- Use application monitoring (Sentry)
+- Implement proper logging
+- Monitor performance metrics
+- Set up alerts for issues
+- Use analytics for user behavior
+- Monitor error rates
+
+## CI/CD Pipeline
+- Use GitHub Actions for automation
+- Implement automated testing
+- Use code quality checks
+- Implement automated deployments
+- Use proper versioning
+- Implement rollback strategies
